@@ -1,7 +1,12 @@
-from flask import render_template
-from app import app
+from flask import render_template, request
+from .config import Config
 
 
-@app.route("/")
-def base():
-    return render_template("base.html")
+def init_routes(app):
+
+    @app.route("/")
+    def base():
+        if request.method == "POST":
+            print(request.form.get("source"))
+            print(request.form.get("target"))
+        return render_template("base.html")
