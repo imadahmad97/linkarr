@@ -7,48 +7,12 @@
 </head>
 <body>
 
-    <h2>Select Source (Files or Folder):</h2>
-    <input id="source" name="source" type="file" webkitdirectory directory multiple />
+    <h2>Select Files:</h2>
 
-    <h2>Select Target (Folder Only):</h2>
-    <input id="target" name="target" type="file" webkitdirectory directory />
-
-    <button onclick="handleSubmission()">Submit</button>
-
-    <div id="result"></div>
-
-    <script>
-        function handleSubmission() {
-            const sourceInput = document.getElementById('source');
-            const targetInput = document.getElementById('target');
-            const resultDiv = document.getElementById('result');
-
-            // Display chosen source files/folders
-            const sourceFiles = sourceInput.files;
-            if (sourceFiles.length > 0) {
-                resultDiv.innerHTML = "<h3>Selected Source Files/Folders:</h3><ul>";
-                for (let i = 0; i < sourceFiles.length; i++) {
-                    resultDiv.innerHTML += "<li>" + sourceFiles[i].webkitRelativePath + "</li>";
-                }
-                resultDiv.innerHTML += "</ul>";
-            } else {
-                resultDiv.innerHTML = "<p>No source files or folders selected.</p>";
-            }
-
-            // Display chosen target folder
-            const targetFiles = targetInput.files;
-            if (targetFiles.length > 0) {
-                resultDiv.innerHTML += "<h3>Selected Target Folder:</h3><ul>";
-                resultDiv.innerHTML += "<li>" + targetFiles[0].webkitRelativePath.split("/")[0] + "</li>";
-                resultDiv.innerHTML += "</ul>";
-            } else {
-                resultDiv.innerHTML += "<p>No target folder selected.</p>";
-            }
-
-            // Prevent form submission, handle everything on the client side
-            return false;
-        }
-    </script>
-
+    <form action="" method="post" enctype="multipart/form-data">
+        <input id="source" name="source" type="file"/>
+        <button name="submit">Submit</button>
+    </form>
+    
 </body>
 </html>

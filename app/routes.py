@@ -4,9 +4,9 @@ from .config import Config
 
 def init_routes(app):
 
-    @app.route("/")
+    @app.route("/", methods=["GET", "POST"])
     def base():
         if request.method == "POST":
-            print(request.form.get("source"))
-            print(request.form.get("target"))
+            uploaded_file = request.files.get("source")
+
         return render_template("base.html")
