@@ -11,7 +11,7 @@ body {
 h2 {
     text-align: center;
     font-size: 2em;
-    color: #34495e;
+    color: black;
     margin-bottom: 20px;
 }
 
@@ -54,7 +54,7 @@ label {
 }
 
 /* Button styling */
-button {
+#button1 {
     width: 100%;
     padding: 10px 20px;
     background-color: #04AA6D;
@@ -68,7 +68,7 @@ button {
 }
 
 /* Button hover effect */
-button:hover {
+#button1:hover {
     background-color: #04AA6D;
 }
 

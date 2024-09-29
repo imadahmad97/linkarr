@@ -1,0 +1,46 @@
+body {
+    font-family: Arial, sans-serif;
+}
+.directory-list {
+    margin-bottom: 20px;
+}
+.directory-list h3 {
+    margin-bottom: 5px;
+}
+.directory-item {
+    display: flex;
+    align-items: center;
+    margin-bottom: 5px;
+}
+.directory-item input[type="text"] {
+    flex: 1;
+    padding: 5px;
+    margin-right: 10px;
+}
+.directory-item button {
+    padding: 5px 10px;
+}
+.add-button {
+    margin-top: 10px;
+}
+.submit-button {
+    padding: 10px 20px;
+}
+.flashes {
+    list-style-type: none;
+    padding: 0;
+    margin-top: 20px;
+}
+.flashes li {
+    padding: 10px;
+    margin-bottom: 5px;
+    border-radius: 5px;
+}
+.success {
+    background-color: #e0ffe0;
+    border: 1px solid #a0d0a0;
+}
+.error {
+    background-color: #ffe0e0;
+    border: 1px solid #d0a0a0;
+}
