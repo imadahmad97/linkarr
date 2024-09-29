@@ -1,0 +1,97 @@
+/* General page styles */
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f4f4f9;
+    color: #333;
+    margin: 0;
+    padding: 20px;
+}
+
+/* Form heading */
+h2 {
+    text-align: center;
+    font-size: 2em;
+    color: #34495e;
+    margin-bottom: 20px;
+}
+
+/* Form styling */
+form {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Unordered list style */
+ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+
+/* List item styling */
+li {
+    margin: 15px 0;
+    display: flex;
+    align-items: center;
+}
+
+/* Checkbox styling */
+input[type="checkbox"] {
+    margin-right: 10px;
+    transform: scale(1.3);
+    accent-color: #04AA6D;
+}
+
+/* Label styling */
+label {
+    font-size: 1.1em;
+    color: #2c3e50;
+    cursor: pointer;
+}
+
+/* Button styling */
+button {
+    width: 100%;
+    padding: 10px 20px;
+    background-color: #04AA6D;
+    border: none;
+    border-radius: 5px;
+    color: #fff;
+    font-size: 1.2em;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    margin-top: 20px;
+}
+
+/* Button hover effect */
+button:hover {
+    background-color: #04AA6D;
+}
+
+/* Flash message styles */
+.flashes {
+    max-width: 600px;
+    margin: 20px auto;
+    padding: 10px;
+    border-radius: 5px;
+    background-color: #f8d7da;
+    color: #721c24;
+    border: 1px solid #f5c6cb;
+    text-align: center;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+    form {
+        width: 90%;
+        padding: 15px;
+    }
+    button {
+        font-size: 1em;
+        padding: 8px;
+    }
+}

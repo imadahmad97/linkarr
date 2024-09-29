@@ -11,12 +11,12 @@ def init_routes(app):
             selected_items = request.form.getlist("selected_items")
             if not selected_items:
                 flash("No items selected", "error")
-                return redirect(url_for("base"))
+                return redirect(url_for("file_selector"))
 
             # Check if target directory exists
             if not os.path.exists(Config.target_dir):
                 flash(f"Target directory '{Config.target_dir}' not found", "error")
-                return redirect(url_for("base"))
+                return redirect(url_for("file_selector"))
 
             for item in selected_items:
                 # Sanitize the item to prevent path traversal attacks
@@ -83,7 +83,7 @@ def init_routes(app):
                 except Exception as e:
                     flash(f"Error linking '{item}': {str(e)}", "error")
 
-            return redirect(url_for("base"))
+            return redirect(url_for("file_selector"))
 
         else:
             # GET request, list the items in source directory
@@ -93,4 +93,4 @@ def init_routes(app):
             except Exception as e:
                 items = []
                 flash(f"Error reading source directory: {str(e)}", "error")
-            return render_template("base.html", items=items)
+            return render_template("file_selector.html", items=items)
