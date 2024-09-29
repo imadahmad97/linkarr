@@ -4,28 +4,52 @@
     File/Folder Selector
 {% endblock %}
 
-
 {% block content %}
-    <h2>Select Files or Directories to HardLink:</h2>
-    <form action="" method="post">
-        <ul>
-        {% for item in items %}
-            <li>
-                <input type="checkbox" name="selected_items" value="{{ item }}" id="item_{{ loop.index0 }}">
-                <label for="item_{{ loop.index0 }}">{{ item }}</label>
-            </li>
-        {% endfor %}
-        </ul>
-        <button type="submit" name="submit">Submit</button>
+    <h2>Select Source and Target Directories:</h2>
+    <form action="" method="get">
+        <label for="source_dir">Source Directory:</label>
+        <select name="selected_source_dir" id="source_dir" onchange="this.form.submit()">
+            <option value="">-- Select Source Directory --</option>
+            {% for dir in source_dirs %}
+                <option value="{{ dir }}" {% if dir == selected_source_dir %}selected{% endif %}>
+                    {{ dir }}
+                </option>
+            {% endfor %}
+        </select>
+        <br><br>
+        <label for="target_dir">Target Directory:</label>
+        <select name="selected_target_dir" id="target_dir">
+            <option value="">-- Select Target Directory --</option>
+            {% for dir in target_dirs %}
+                <option value="{{ dir }}" {% if dir == selected_target_dir %}selected{% endif %}>
+                    {{ dir }}
+                </option>
+            {% endfor %}
+        </select>
+        <br><br>
+        {% if selected_source_dir %}
+            <h2>Select Files or Directories to HardLink:</h2>
+            <ul>
+                {% for item in items %}
+                    <li>
+                        <input type="checkbox" name="selected_items" value="{{ item }}" id="item_{{ loop.index0 }}">
+                        <label for="item_{{ loop.index0 }}">{{ item }}</label>
+                    </li>
+                {% endfor %}
+            </ul>
+            <input type="hidden" name="selected_source_dir" value="{{ selected_source_dir }}">
+            <input type="hidden" name="selected_target_dir" value="{{ selected_target_dir }}">
+            <button type="submit" formaction="" formmethod="post">Submit</button>
+        {% endif %}
     </form>
 
     {% with messages = get_flashed_messages(with_categories=true) %}
-      {% if messages %}
-        <ul class="flashes">
-        {% for category, message in messages %}
-          <li class="{{ category }}">{{ message }}</li>
-        {% endfor %}
-        </ul>
-      {% endif %}
+        {% if messages %}
+            <ul class="flashes">
+                {% for category, message in messages %}
+                    <li class="{{ category }}">{{ message }}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
     {% endwith %}
 {% endblock %}

@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Configure Directories</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+        .directory-list {
+            margin-bottom: 20px;
+        }
+        .directory-list h3 {
+            margin-bottom: 5px;
+        }
+        .directory-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 5px;
+        }
+        .directory-item input[type="text"] {
+            flex: 1;
+            padding: 5px;
+            margin-right: 10px;
+        }
+        .directory-item button {
+            padding: 5px 10px;
+        }
+        .add-button {
+            margin-top: 10px;
+        }
+        .submit-button {
+            padding: 10px 20px;
+        }
+        .flashes {
+            list-style-type: none;
+            padding: 0;
+            margin-top: 20px;
+        }
+        .flashes li {
+            padding: 10px;
+            margin-bottom: 5px;
+            border-radius: 5px;
+        }
+        .success {
+            background-color: #e0ffe0;
+            border: 1px solid #a0d0a0;
+        }
+        .error {
+            background-color: #ffe0e0;
+            border: 1px solid #d0a0a0;
+        }
+    </style>
+</head>
+<body>
+    <h1>Configure Source and Target Directories</h1>
+    <form method="post">
+        <!-- Source Directories -->
+        <div class="directory-list" id="source-dirs">
+            <h3>Source Directories</h3>
+            {% for dir in config.get('source_dirs', []) %}
+                <div class="directory-item">
+                    <input type="text" name="source_dirs" value="{{ dir }}" placeholder="Enter source directory">
+                    <button type="button" onclick="removeField(this)">Remove</button>
+                </div>
+            {% endfor %}
+            <!-- Template for new source directory inputs -->
+            <div class="directory-item" style="display: none;" id="source-dir-template">
+                <input type="text" name="source_dirs" placeholder="Enter source directory">
+                <button type="button" onclick="removeField(this)">Remove</button>
+            </div>
+            <button type="button" class="add-button" onclick="addField('source-dirs', 'source-dir-template')">Add Source Directory</button>
+        </div>
+
+        <!-- Target Directories -->
+        <div class="directory-list" id="target-dirs">
+            <h3>Target Directories</h3>
+            {% for dir in config.get('target_dirs', []) %}
+                <div class="directory-item">
+                    <input type="text" name="target_dirs" value="{{ dir }}" placeholder="Enter target directory">
+                    <button type="button" onclick="removeField(this)">Remove</button>
+                </div>
+            {% endfor %}
+            <!-- Template for new target directory inputs -->
+            <div class="directory-item" style="display: none;" id="target-dir-template">
+                <input type="text" name="target_dirs" placeholder="Enter target directory">
+                <button type="button" onclick="removeField(this)">Remove</button>
+            </div>
+            <button type="button" class="add-button" onclick="addField('target-dirs', 'target-dir-template')">Add Target Directory</button>
+        </div>
+
+        <input type="submit" value="Update Configurations" class="submit-button">
+    </form>
+
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            <ul class="flashes">
+                {% for category, message in messages %}
+                    <li class="{{ category }}">{{ message }}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+    {% endwith %}
+
+    <script>
+        function addField(containerId, templateId) {
+            var container = document.getElementById(containerId);
+            var template = document.getElementById(templateId);
+            var newField = template.cloneNode(true);
+            newField.style.display = "flex";
+            newField.removeAttribute("id");
+            container.insertBefore(newField, container.querySelector('.add-button'));
+        }
+
+        function removeField(button) {
+            var field = button.parentElement;
+            field.parentElement.removeChild(field);
+        }
+    </script>
+</body>
+</html>
