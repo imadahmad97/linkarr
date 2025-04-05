@@ -9,38 +9,38 @@ def init_routes(app):
     @app.route("/", methods=["GET", "POST"])
     def base():
         if request.method == "POST":
-            selected_source_dir = request.form.get("selected_source_dir")
-            selected_target_dir = request.form.get("selected_target_dir")
-            selected_items = request.form.getlist("selected_items")
+            # selected_source_dir = request.form.get("selected_source_dir")
+            # selected_target_dir = request.form.get("selected_target_dir")
+            # selected_items = request.form.getlist("selected_items")
 
-            if not selected_items:
-                flash("No items selected", "error")
-                return redirect(url_for("base"))
+            # if not selected_items:
+            #     flash("No items selected", "error")
+            #     return redirect(url_for("base"))
 
-            if not selected_source_dir or not selected_target_dir:
-                flash("Source or target directory not selected", "error")
-                return redirect(url_for("base"))
+                # if not selected_source_dir or not selected_target_dir:
+                #     flash("Source or target directory not selected", "error")
+                #     return redirect(url_for("base"))
 
-            # Validate the selected source and target directories
-            if selected_source_dir not in Config.source_dirs:
-                flash("Invalid source directory selected", "error")
-                return redirect(url_for("base"))
+                # Validate the selected source and target directories
+                # if selected_source_dir not in Config.source_dirs:
+                #     flash("Invalid source directory selected", "error")
+                #     return redirect(url_for("base"))
 
-            if selected_target_dir not in Config.target_dirs:
-                flash("Invalid target directory selected", "error")
-                return redirect(url_for("base"))
+                # if selected_target_dir not in Config.target_dirs:
+                #     flash("Invalid target directory selected", "error")
+                #     return redirect(url_for("base"))
 
-            if not os.path.exists(selected_target_dir):
-                flash(f"Target directory '{selected_target_dir}' not found", "error")
-                return redirect(url_for("base"))
+                # if not os.path.exists(selected_target_dir):
+                #     flash(f"Target directory '{selected_target_dir}' not found", "error")
+                #     return redirect(url_for("base"))
 
-            for item in selected_items:
-                # Sanitize the item to prevent path traversal attacks
-                item = os.path.basename(item)
-                source = os.path.join(selected_source_dir, item)
-                if not os.path.exists(source):
-                    flash(f"Source '{item}' not found", "error")
-                    continue
+                # for item in selected_items:
+                #     # Sanitize the item to prevent path traversal attacks
+                #     item = os.path.basename(item)
+                #     source = os.path.join(selected_source_dir, item)
+                #     if not os.path.exists(source):
+                #         flash(f"Source '{item}' not found", "error")
+                #         continue
 
                 try:
                     if os.path.isfile(source):
