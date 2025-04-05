@@ -42,46 +42,46 @@ def init_routes(app):
                 #         flash(f"Source '{item}' not found", "error")
                 #         continue
 
-                try:
-                    if os.path.isfile(source):
-                        # If source is a file, create a hardlink in the target directory
-                        target_file = os.path.join(
-                            selected_target_dir, os.path.basename(source)
-                        )
-                        if not os.path.exists(target_file):
-                            os.link(source, target_file)
-                            flash(f"File '{item}' successfully linked", "success")
+                # try:
+                #     if os.path.isfile(source):
+                #         # If source is a file, create a hardlink in the target directory
+                #         target_file = os.path.join(
+                #             selected_target_dir, os.path.basename(source)
+                #         )
+                #         if not os.path.exists(target_file):
+                #             os.link(source, target_file)
+                #             flash(f"File '{item}' successfully linked", "success")
                         else:
                             flash(
                                 f"File '{item}' already exists in target directory",
                                 "warning",
                             )
-                    elif os.path.isdir(source):
-                        # If source is a directory
-                        target_subdir = os.path.join(
-                            selected_target_dir, os.path.basename(source)
-                        )
+                    # elif os.path.isdir(source):
+                    #     # If source is a directory
+                    #     target_subdir = os.path.join(
+                    #         selected_target_dir, os.path.basename(source)
+                    #     )
                         if os.path.exists(target_subdir):
                             flash(
                                 f"Directory '{item}' already exists in target directory",
                                 "warning",
                             )
                         else:
-                            os.makedirs(target_subdir, exist_ok=True)
+                            # os.makedirs(target_subdir, exist_ok=True)
                             flash(
                                 f"Directory '{item}' created in target directory",
                                 "success",
                             )
-                        for root, dirs, files in os.walk(source):
-                            # Recreate directory structure
-                            relative_path = os.path.relpath(root, source)
-                            target_root = os.path.join(target_subdir, relative_path)
-                            os.makedirs(target_root, exist_ok=True)
-                            for file in files:
-                                source_file = os.path.join(root, file)
-                                target_file = os.path.join(target_root, file)
-                                if not os.path.exists(target_file):
-                                    os.link(source_file, target_file)
+                        # for root, dirs, files in os.walk(source):
+                        #     # Recreate directory structure
+                        #     relative_path = os.path.relpath(root, source)
+                        #     target_root = os.path.join(target_subdir, relative_path)
+                        #     os.makedirs(target_root, exist_ok=True)
+                        #     for file in files:
+                        #         source_file = os.path.join(root, file)
+                        #         target_file = os.path.join(target_root, file)
+                        #         if not os.path.exists(target_file):
+                        #             os.link(source_file, target_file)
                                     flash(
                                         f"File '{os.path.join(item, relative_path, file)}' successfully linked",
                                         "success",
