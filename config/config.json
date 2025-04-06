@@ -4,5 +4,7 @@
         "/test/source_files/dir_test2",
         "/test/source_files/dir_test3"
     ],
-    "target_dirs": []
+    "target_dirs": [
+        "/"
+    ]
 }
