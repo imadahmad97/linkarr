@@ -1,20 +1,22 @@
-from app.utils_change import get_user_selection
 from app.model.userselection import UserSelection
 from app.service.linking_service import HardLinker
+from flask import current_app as app
 
 
 def handle_user_submission():
 
-    # Step 1: Get user selection and build UserSelection object from it
-    selected_source_dir, selected_target_dir, selected_files = get_user_selection()
-    user_selection = UserSelection(
-        selected_source_dir, selected_target_dir, selected_files
-    )
+    # Step 1: Build user selection from request
+    app.logger.info("Building user selection from request")
+    user_selection = UserSelection.build_user_selection_from_request()
 
     # Step 2: Validate user selection
+    app.logger.info("Validating user selection")
     user_selection.validate_user_selection()
 
     # Step 3: Perform hardlinking
+    app.logger.info("Performing hardlinking")
     HardLinker.hardlink_files_and_directories(
-        selected_source_dir, selected_target_dir, selected_files
+        user_selection.selected_source_dir,
+        user_selection.selected_target_dir,
+        user_selection.selected_items,
     )

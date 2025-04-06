@@ -1,5 +1,6 @@
 import os
 from app.config import Config
+from flask import request
 
 
 class UserSelection:
@@ -7,6 +8,14 @@ class UserSelection:
         self.selected_source_dir = selected_source_dir
         self.selected_target_dir = selected_target_dir
         self.selected_items = selected_items
+
+    @classmethod
+    def build_user_selection_from_request(cls):
+        selected_source_dir = request.form.get("selected_source_dir")
+        selected_target_dir = request.form.get("selected_target_dir")
+        selected_items = request.form.getlist("selected_items")
+
+        return cls(selected_source_dir, selected_target_dir, selected_items)
 
     def validate_directories_and_items_are_selected(self):
         if not self.selected_source_dir:

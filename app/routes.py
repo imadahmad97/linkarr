@@ -3,6 +3,9 @@ from app.controller.handle_user_submission import handle_user_submission
 from .config import Config
 import json
 import os
+import logging
+
+logger = logging.getLogger(__name__)
 
 
 def init_routes(app):
@@ -10,6 +13,7 @@ def init_routes(app):
     @app.route("/", methods=["GET", "POST"])
     def base():
         if request.method == "POST":
+            app.logger.info("Handling POST request")
             handle_user_submission()
             return redirect(url_for("base"))
 
