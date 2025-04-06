@@ -14,7 +14,17 @@ def init_routes(app):
     def base():
         if request.method == "POST":
             app.logger.info("Handling POST request")
-            handle_user_submission()
+
+            selected_source_dir = request.form.get("selected_source_dir")
+            selected_target_dir = request.form.get("selected_target_dir")
+            selected_items = request.form.getlist("selected_items")
+            app.logger.info(f"Selected source dir: {selected_source_dir}")
+            app.logger.info(f"Selected target dir: {selected_target_dir}")
+            app.logger.info(f"Selected items: {selected_items}")
+
+            handle_user_submission(
+                selected_source_dir, selected_target_dir, selected_items
+            )
             return redirect(url_for("base"))
 
         else:
