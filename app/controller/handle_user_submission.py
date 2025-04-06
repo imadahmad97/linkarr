@@ -1,5 +1,6 @@
 from app.model.userselection import UserSelection
 from app.service.linking_service import HardLinker
+from app.service.validation_service import ValidateUserSelection
 from flask import current_app as app
 
 
@@ -11,7 +12,8 @@ def handle_user_submission():
 
     # Step 2: Validate user selection
     app.logger.info("Validating user selection")
-    user_selection.validate_user_selection()
+    validator = ValidateUserSelection(user_selection)
+    validator.validate_user_selection()
 
     # Step 3: Perform hardlinking
     app.logger.info("Performing hardlinking")
