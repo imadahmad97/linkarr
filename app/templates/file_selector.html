@@ -8,7 +8,7 @@
     <h2>Select Source and Target Directories:</h2>
     <form action="" method="get">
         <label for="source_dir">Source Directory:</label>
-        <select name="selected_source_dir" id="source_dir" onchange="this.form.submit()">
+        <select name="selected_source_dir" id="source_dir" onchange="checkAndSubmit()">
             <option value="">-- Select Source Directory --</option>
             {% for dir in source_dirs %}
                 <option value="{{ dir }}" {% if dir == selected_source_dir %}selected{% endif %}>
@@ -18,7 +18,7 @@
         </select>
         <br><br>
         <label for="target_dir">Target Directory:</label>
-        <select name="selected_target_dir" id="target_dir">
+        <select name="selected_target_dir" id="target_dir" onchange="checkAndSubmit()">
             <option value="">-- Select Target Directory --</option>
             {% for dir in target_dirs %}
                 <option value="{{ dir }}" {% if dir == selected_target_dir %}selected{% endif %}>
@@ -52,4 +52,14 @@
             </ul>
         {% endif %}
     {% endwith %}
+    <script>
+        function checkAndSubmit() {
+          const source = document.getElementById('source_dir').value;
+          const target = document.getElementById('target_dir').value;
+  
+          if (source && target) {
+            document.forms[0].submit();
+          }
+        }
+      </script>
 {% endblock %}

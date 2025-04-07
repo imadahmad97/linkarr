@@ -46,12 +46,6 @@ class UserSelection:
             if not os.path.exists(item_path):
                 raise ValueError(f"Item '{item}' not found in source directory")
 
-    def validate_items_are_in_config(self):
-        app.logger.info("Validating items are in config")
-        for item in self.selected_items:
-            if item not in Config.items:
-                raise ValueError(f"Invalid item '{item}' selected")
-
     def validate_user_directory_selection(self):
         app.logger.info("Validating user directory selection")
         self.validate_directories_are_selected()
@@ -63,5 +57,4 @@ class UserSelection:
         app.logger.info("Validating user item selection")
         self.validate_items_are_selected()
         self.validate_items_exist()
-        self.validate_items_are_in_config()
         app.logger.info("User item selection validated")

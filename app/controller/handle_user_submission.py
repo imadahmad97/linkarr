@@ -1,5 +1,6 @@
 from app.model.userselection import UserSelection
 from app.service.linking_service import HardLinker
+from app.service.get_items_in_source_dir import get_items_in_source_dir
 from flask import current_app as app
 
 
@@ -37,3 +38,8 @@ def handle_get_request(selected_source_dir, selected_target_dir):
 
     # Step 3: Get items in source directory
     app.logger.info("Getting items in source directory")
+    items = get_items_in_source_dir(user_selection.selected_source_dir)
+
+    # Step 4: Return items for rendering
+    app.logger.info("Returning items for rendering")
+    return items

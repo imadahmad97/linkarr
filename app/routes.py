@@ -1,8 +1,10 @@
 from flask import render_template, request, flash, redirect, url_for
-from app.controller.handle_user_submission import handle_post_request
+from app.controller.handle_user_submission import (
+    handle_post_request,
+    handle_get_request,
+)
 from .config import Config
 import json
-import os
 import logging
 
 logger = logging.getLogger(__name__)
@@ -28,27 +30,25 @@ def init_routes(app):
             app.logger.info("Handling POST request completed, files hardlinked")
             return redirect(url_for("base"))
 
-        else:
-            # GET request, display the source and target directory selection
-            selected_source_dir = request.args.get("selected_source_dir")
-            selected_target_dir = request.args.get("selected_target_dir")
+        elif request.method == "GET":
+            app.logger.info("Handling GET request")
 
+            selected_source_dir = request.args.get("selected_source_dir")
+            app.logger.info(f"Selected source dir: {selected_source_dir}")
+            selected_target_dir = request.args.get("selected_target_dir")
+            app.logger.info(f"Selected target dir: {selected_target_dir}")
             items = []
+
             if selected_source_dir:
-                if selected_source_dir in source_dirs:
-                    try:
-                        items = os.listdir(selected_source_dir)
-                        items = sorted(items)
-                    except Exception as e:
-                        flash(f"Error reading source directory: {str(e)}", "error")
-                else:
-                    flash("Invalid source directory selected", "error")
+                app.logger.info("Getting items for rendering")
+                items = handle_get_request(selected_source_dir, selected_target_dir)
+                app.logger.info("Successfully retrieved items for rendering")
 
             return render_template(
                 "file_selector.html",
                 items=items,
-                source_dirs=source_dirs,
-                target_dirs=target_dirs,
+                source_dirs=Config.source_dirs,
+                target_dirs=Config.target_dirs,
                 selected_source_dir=selected_source_dir,
                 selected_target_dir=selected_target_dir,
             )
