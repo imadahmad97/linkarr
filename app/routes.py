@@ -1,7 +1,9 @@
 from flask import render_template, request, flash, redirect, url_for
-from app.controller.handle_user_submission import (
-    handle_post_request,
-    handle_get_request,
+from app.controller.file_selector.handle_post_request import (
+    handle_post_request_for_file_selector,
+)
+from app.controller.file_selector.handle_get_request import (
+    handle_get_request_for_file_selector,
 )
 from .config import Config
 import json
@@ -15,7 +17,7 @@ def init_routes(app):
     @app.route("/", methods=["GET", "POST"])
     def base():
         if request.method == "POST":
-            app.logger.info("Handling POST request")
+            app.logger.info("Handling POST request for file selector")
 
             selected_source_dir = request.form.get("selected_source_dir")
             app.logger.info(f"Selected source dir: {selected_source_dir}")
@@ -24,14 +26,14 @@ def init_routes(app):
             selected_items = request.form.getlist("selected_items")
             app.logger.info(f"Selected items: {selected_items}")
 
-            handle_post_request(
+            handle_post_request_for_file_selector(
                 selected_source_dir, selected_target_dir, selected_items
             )
             app.logger.info("Handling POST request completed, files hardlinked")
             return redirect(url_for("base"))
 
         elif request.method == "GET":
-            app.logger.info("Handling GET request")
+            app.logger.info("Handling GET request for file selector")
 
             selected_source_dir = request.args.get("selected_source_dir")
             app.logger.info(f"Selected source dir: {selected_source_dir}")
@@ -41,7 +43,9 @@ def init_routes(app):
 
             if selected_source_dir:
                 app.logger.info("Getting items for rendering")
-                items = handle_get_request(selected_source_dir, selected_target_dir)
+                items = handle_get_request_for_file_selector(
+                    selected_source_dir, selected_target_dir
+                )
                 app.logger.info("Successfully retrieved items for rendering")
 
             return render_template(
@@ -57,8 +61,11 @@ def init_routes(app):
     def config():
         if request.method == "POST":
             # Get lists of directories from the form data
+            app.logger.info("Handling POST request for config")
             source_dirs = request.form.getlist("source_dirs")
+            app.logger.info(f"Source directories: {source_dirs}")
             target_dirs = request.form.getlist("target_dirs")
+            app.logger.info(f"Target directories: {target_dirs}")
 
             # Clean up directories (remove empty entries)
             source_dirs = [dir.strip() for dir in source_dirs if dir.strip()]
@@ -83,4 +90,5 @@ def init_routes(app):
             return redirect(url_for("config"))
 
         # GET request
+        app.logger.info("Rendering config page")
         return render_template("config.html", config=Config.config_data)
