@@ -1,5 +1,5 @@
 from flask import render_template, request, flash, redirect, url_for
-from app.controller.handle_user_submission import handle_user_submission
+from app.controller.handle_user_submission import handle_post_request
 from .config import Config
 import json
 import os
@@ -16,24 +16,22 @@ def init_routes(app):
             app.logger.info("Handling POST request")
 
             selected_source_dir = request.form.get("selected_source_dir")
-            selected_target_dir = request.form.get("selected_target_dir")
-            selected_items = request.form.getlist("selected_items")
             app.logger.info(f"Selected source dir: {selected_source_dir}")
+            selected_target_dir = request.form.get("selected_target_dir")
             app.logger.info(f"Selected target dir: {selected_target_dir}")
+            selected_items = request.form.getlist("selected_items")
             app.logger.info(f"Selected items: {selected_items}")
 
-            handle_user_submission(
+            handle_post_request(
                 selected_source_dir, selected_target_dir, selected_items
             )
+            app.logger.info("Handling POST request completed, files hardlinked")
             return redirect(url_for("base"))
 
         else:
             # GET request, display the source and target directory selection
             selected_source_dir = request.args.get("selected_source_dir")
             selected_target_dir = request.args.get("selected_target_dir")
-
-            source_dirs = Config.source_dirs
-            target_dirs = Config.target_dirs
 
             items = []
             if selected_source_dir:

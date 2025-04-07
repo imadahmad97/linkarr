@@ -3,17 +3,18 @@ from app.service.linking_service import HardLinker
 from flask import current_app as app
 
 
-def handle_user_submission(selected_source_dir, selected_target_dir, selected_items):
+def handle_post_request(selected_source_dir, selected_target_dir, selected_items):
 
     # Step 1: Build user selection from request
-    app.logger.info("Building user selection from request")
+    app.logger.info("Building user selection from POST request")
     user_selection = UserSelection(
         selected_source_dir, selected_target_dir, selected_items
     )
 
     # Step 2: Validate user selection
     app.logger.info("Validating user selection")
-    user_selection.validate_user_selection()
+    user_selection.validate_user_directory_selection()
+    user_selection.validate_user_item_selection()
 
     # Step 3: Perform hardlinking
     app.logger.info("Performing hardlinking")
@@ -22,3 +23,17 @@ def handle_user_submission(selected_source_dir, selected_target_dir, selected_it
         user_selection.selected_target_dir,
         user_selection.selected_items,
     )
+
+
+def handle_get_request(selected_source_dir, selected_target_dir):
+
+    # Step 1: Build user selection from request
+    app.logger.info("Building user selection from GET request")
+    user_selection = UserSelection(selected_source_dir, selected_target_dir)
+
+    # Step 2: Validate user selection
+    app.logger.info("Validating user selection")
+    user_selection.validate_user_directory_selection()
+
+    # Step 3: Get items in source directory
+    app.logger.info("Getting items in source directory")
