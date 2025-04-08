@@ -1,5 +1,5 @@
 import os
-from app.config import Config
+from app.model.config import Config
 from flask import current_app as app
 
 

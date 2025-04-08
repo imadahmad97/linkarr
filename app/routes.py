@@ -1,12 +1,14 @@
 from flask import render_template, request, flash, redirect, url_for
-from app.controller.file_selector.handle_post_request import (
+from app.controller.file_selector_page.handle_post_request import (
     handle_post_request_for_file_selector,
 )
-from app.controller.file_selector.handle_get_request import (
+from app.controller.file_selector_page.handle_get_request import (
     handle_get_request_for_file_selector,
 )
-from .config import Config
-import json
+from app.controller.config_page.handle_post_request import (
+    handle_post_request_for_config_page,
+)
+from .model.config import Config
 import logging
 
 logger = logging.getLogger(__name__)
@@ -62,31 +64,13 @@ def init_routes(app):
         if request.method == "POST":
             # Get lists of directories from the form data
             app.logger.info("Handling POST request for config")
+
             source_dirs = request.form.getlist("source_dirs")
             app.logger.info(f"Source directories: {source_dirs}")
             target_dirs = request.form.getlist("target_dirs")
             app.logger.info(f"Target directories: {target_dirs}")
 
-            # Clean up directories (remove empty entries)
-            source_dirs = [dir.strip() for dir in source_dirs if dir.strip()]
-            target_dirs = [dir.strip() for dir in target_dirs if dir.strip()]
-
-            # Update the config_data
-            Config.config_data["source_dirs"] = source_dirs
-            Config.config_data["target_dirs"] = target_dirs
-
-            # Save the updated config_data back to the config.json file
-            try:
-                with open(Config.CONFIG_FILE_PATH, "w") as f:
-                    json.dump(Config.config_data, f, indent=4)
-                flash("Configuration updated successfully.", "success")
-
-                # Reload configurations
-                Config.source_dirs = source_dirs
-                Config.target_dirs = target_dirs
-            except Exception as e:
-                flash(f"Error saving configuration: {str(e)}", "error")
-
+            handle_post_request_for_config_page(source_dirs, target_dirs)
             return redirect(url_for("config"))
 
         # GET request
