@@ -1,4 +1,4 @@
-from flask import render_template, request, flash, redirect, url_for
+from flask import render_template, request, redirect, url_for
 from app.controller.file_selector_page.handle_post_request import (
     handle_post_request_for_file_selector,
 )

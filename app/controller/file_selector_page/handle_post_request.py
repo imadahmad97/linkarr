@@ -1,4 +1,4 @@
-from app.service.linking_service import HardLinker
+from app.service.linking_service import hardlink_files_and_directories
 from flask import current_app as app
 from app.model.userselection import UserSelection
 
@@ -20,7 +20,7 @@ def handle_post_request_for_file_selector(
 
     # Step 3: Perform hardlinking
     app.logger.info("Performing hardlinking")
-    HardLinker.hardlink_files_and_directories(
+    hardlink_files_and_directories(
         user_selection.selected_source_dir,
         user_selection.selected_target_dir,
         user_selection.selected_items,
