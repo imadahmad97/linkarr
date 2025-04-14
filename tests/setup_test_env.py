@@ -8,6 +8,7 @@ class SetupTestEnv:
         self.setup_env_for_test_create_directory_hardlink_01()
         self.setup_env_for_test_hardlink_files_and_directories_01()
         self.setup_env_for_test_get_items_in_source_dir_01()
+        self.setup_env_for_validate_directories_exist_01()
 
     @staticmethod
     def create_test_directory():
@@ -89,3 +90,19 @@ class SetupTestEnv:
             "w",
         ) as f:
             f.write("This is a test file 3.")
+
+    @staticmethod
+    def setup_env_for_validate_directories_exist_01():
+        os.makedirs(
+            "tests/test_directory/validate_directories_exist_01/source_dir/dir_01",
+            exist_ok=True,
+        )
+        os.makedirs(
+            "tests/test_directory/validate_directories_exist_01/target_dir/dir_02",
+            exist_ok=True,
+        )
+        with open(
+            "tests/test_directory/validate_directories_exist_01/source_dir/dir_01/test_file.txt",
+            "w",
+        ) as f:
+            f.write("This is a test file.")
