@@ -1,46 +1,145 @@
+/* General page styles */
 body {
-    font-family: Arial, sans-serif;
+  font-family: "Arial", sans-serif;
+  background-color: #f4f4f9;
+  color: #333;
+  margin: 0;
+  padding: 20px;
+}
+
+/* Form heading */
+h2 {
+  text-align: center;
+  font-size: 2em;
+  color: black;
+  margin-bottom: 20px;
+}
+
+/* Form styling */
+form {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: #ffffff;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Unordered list style */
+ul {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
+/* List item styling */
+li {
+  margin: 15px 0;
+  display: flex;
+  align-items: center;
+}
+
+/* Checkbox styling */
+input[type="checkbox"] {
+  margin-right: 10px;
+  transform: scale(1.3);
+  accent-color: #04aa6d;
+}
+
+/* Label styling */
+label {
+  font-size: 1.1em;
+  color: #2c3e50;
+  cursor: pointer;
+}
+
+/* Button styling */
+#button1 {
+  width: 100%;
+  padding: 10px 20px;
+  background-color: #04aa6d;
+  border: none;
+  border-radius: 5px;
+  color: #fff;
+  font-size: 1.2em;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  margin-top: 20px;
+}
+
+/* Button hover effect */
+#button1:hover {
+  background-color: #04aa6d;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  form {
+    width: 90%;
+    padding: 15px;
+  }
+  button {
+    font-size: 1em;
+    padding: 8px;
+  }
+}
+
+body {
+  font-family: Arial, sans-serif;
 }
 .directory-list {
-    margin-bottom: 20px;
+  margin-bottom: 20px;
 }
 .directory-list h3 {
-    margin-bottom: 5px;
+  margin-bottom: 5px;
 }
 .directory-item {
-    display: flex;
-    align-items: center;
-    margin-bottom: 5px;
+  display: flex;
+  align-items: center;
+  margin-bottom: 5px;
 }
 .directory-item input[type="text"] {
-    flex: 1;
-    padding: 5px;
-    margin-right: 10px;
+  flex: 1;
+  padding: 5px;
+  margin-right: 10px;
 }
 .directory-item button {
-    padding: 5px 10px;
+  padding: 5px 10px;
 }
 .add-button {
-    margin-top: 10px;
+  margin-top: 10px;
 }
 .submit-button {
-    padding: 10px 20px;
+  padding: 10px 20px;
 }
 .flashes {
-    list-style-type: none;
-    padding: 0;
-    margin-top: 20px;
+  list-style-type: none;
+  padding: 0;
+  margin-top: 20px;
 }
+
 .flashes li {
-    padding: 10px;
-    margin-bottom: 5px;
-    border-radius: 5px;
+  padding: 10px;
+  margin-bottom: 5px;
+  border-radius: 5px;
+  color: black;
 }
+
+/* Success flash */
 .success {
-    background-color: #e0ffe0;
-    border: 1px solid #a0d0a0;
+  background-color: #4caf50; /* green */
+}
+
+/* Error flash */
+.error {
+  background-color: #f44336; /* red */
+}
+
+.success {
+  background-color: #e0ffe0;
+  border: 1px solid #a0d0a0;
 }
 .error {
-    background-color: #ffe0e0;
-    border: 1px solid #d0a0a0;
+  background-color: #ffe0e0;
+  border: 1px solid #d0a0a0;
 }

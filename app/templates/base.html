@@ -8,11 +8,7 @@
       type="text/css"
       href="{{ url_for('static', filename='base.css') }}"
     />
-    <link
-      rel="stylesheet"
-      type="text/css"
-      href="{{ url_for('static', filename='file_selector.css') }}"
-    />
+    {% block styles %} {% endblock %}
   </head>
   <body>
     <div class="topnav">

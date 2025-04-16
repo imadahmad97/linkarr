@@ -1,4 +1,8 @@
 {
-  "source_dirs": ["files_to_hardlink"],
-  "target_dirs": ["source_directory"]
+    "source_dirs": [
+        "files_to_hardlink"
+    ],
+    "target_dirs": [
+        "source_directory"
+    ]
 }
