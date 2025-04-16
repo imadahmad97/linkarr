@@ -1,4 +1,4 @@
-from flask import render_template, request, redirect, url_for
+from flask import render_template, request, redirect, url_for, flash, Markup
 from app.controller.file_selector_page.handle_post_request import (
     handle_post_request_for_file_selector,
 )
@@ -32,6 +32,13 @@ def init_routes(app):
                 selected_source_dir, selected_target_dir, selected_items
             )
             app.logger.info("Handling POST request completed, files hardlinked")
+            for item in selected_items:
+                flash(
+                    Markup(
+                        f"Hardlinked&nbsp;<strong>{item}</strong>&nbsp;from&nbsp;<strong>{selected_source_dir}</strong>&nbsp;to&nbsp;<strong>{selected_target_dir}</strong>&nbsp;\u2713"
+                    )
+                )
+
             return redirect(url_for("base"))
 
         elif request.method == "GET":

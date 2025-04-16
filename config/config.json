@@ -1,12 +1,4 @@
 {
-    "source_dirs": [
-        "test/source_files/dir_test",
-        "/test/source_files/dir_test2",
-        "/test/source_files/dir_test3",
-        "/test/source_files/dir_test3",
-        "dwqd"
-    ],
-    "target_dirs": [
-        "test/target_files"
-    ]
+  "source_dirs": ["files_to_hardlink"],
+  "target_dirs": ["source_directory"]
 }
