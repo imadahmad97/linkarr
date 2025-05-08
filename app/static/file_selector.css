@@ -25,6 +25,15 @@ form {
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
+.dark-mode form {
+  background-color: #1e1e1e;
+  color: yellow;
+}
+
+.dark-mode h2 {
+  color: white;
+}
+
 /* Unordered list style */
 ul {
   list-style-type: none;

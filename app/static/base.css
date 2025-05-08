@@ -6,6 +6,10 @@
   align-items: center;
 }
 
+.dark-mode .topnav {
+  background-color: #121212;
+}
+
 /* Style the links inside the navigation bar */
 .topnav a {
   float: left;
@@ -16,10 +20,29 @@
   padding: 14px 16px;
 }
 
+.topnav button {
+  background-color: white;
+  border: none;
+}
+
+.dark-mode .topnav button {
+  background-color: #121212;
+  color: white;
+}
+
 /* Change the color of links on hover */
 .topnav a:hover {
   background-color: #04aa6d;
   color: black;
+}
+
+.dark-mode .topnav a:hover {
+  background-color: #04aa6d;
+  color: black;
+}
+
+.dark-mode .topnav a {
+  color: white;
 }
 
 /* Add a color to the active/current link */
@@ -40,4 +63,14 @@
 .topnav a.logo:hover {
   background-color: transparent !important;
   color: #003366 !important;
+}
+
+.dark-mode {
+  background-color: #121212;
+  color: white;
+}
+
+.dark-mode-toggle {
+  margin-left: auto;
+  margin-right: 20px; /* if you still want a little padding */
 }
