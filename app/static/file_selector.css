@@ -26,8 +26,7 @@ form {
 }
 
 .dark-mode form {
-  background-color: #1e1e1e;
-  color: yellow;
+  background-color: #121212;
 }
 
 .dark-mode h2 {
@@ -60,6 +59,10 @@ label {
   font-size: 1.1em;
   color: #2c3e50;
   cursor: pointer;
+}
+
+.dark-mode label {
+  color: #ecf0f1;
 }
 
 /* Button styling */

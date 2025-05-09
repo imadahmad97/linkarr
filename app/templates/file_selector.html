@@ -15,7 +15,7 @@ href="{{ url_for('static', filename='file_selector.css') }}"
 {% block content %}
     <h2>Select Source and Target Directories:</h2>
     <form action="" method="get">
-        <label for="source_dir">Source Directory:</label>
+        <label for="source_dir"><h3>Source Directory:</h3></label>
         <select name="selected_source_dir" id="source_dir" onchange="checkAndSubmit()">
             <option value="">-- Select Source Directory --</option>
             {% for dir in source_dirs %}
@@ -25,7 +25,7 @@ href="{{ url_for('static', filename='file_selector.css') }}"
             {% endfor %}
         </select>
         <br><br>
-        <label for="target_dir">Target Directory:</label>
+        <label for="target_dir"><h3>Target Directory:</h3></label>
         <select name="selected_target_dir" id="target_dir" onchange="checkAndSubmit()">
             <option value="">-- Select Target Directory --</option>
             {% for dir in target_dirs %}

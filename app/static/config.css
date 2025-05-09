@@ -143,3 +143,28 @@ body {
   background-color: #ffe0e0;
   border: 1px solid #d0a0a0;
 }
+
+.dark-mode form {
+  background-color: #121212;
+}
+
+.dark-mode h2 {
+  color: white;
+}
+
+.dark-mode label {
+  color: #ecf0f1;
+}
+
+.button {
+  width: 100%;
+  padding: 10px 20px;
+  background-color: #04aa6d;
+  border: none;
+  border-radius: 5px;
+  color: #fff;
+  font-size: 1.2em;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  margin-top: 20px;
+}
