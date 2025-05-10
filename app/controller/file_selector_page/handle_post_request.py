@@ -1,4 +1,5 @@
-from app.service.linking_service import hardlink_files_and_directories
+from app.service.hardlink_service import hardlink_files_and_directories
+from app.service.symboliclink_service import symbolically_link_files_and_directories
 from flask import current_app as app
 from app.model.userselection import UserSelection
 
@@ -29,7 +30,7 @@ def handle_link_request(
 
     elif user_selection.link_type == "symbolic":
         app.logger.info("Performing symbolic linking")
-        symboliclink_files_and_directories(
+        symbolically_link_files_and_directories(
             user_selection.selected_source_dir,
             user_selection.selected_target_dir,
             user_selection.selected_items,
