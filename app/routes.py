@@ -33,13 +33,23 @@ def init_routes(app):
             handle_link_request(
                 selected_source_dir, selected_target_dir, link_type, selected_items
             )
-            app.logger.info("Handling POST request completed, files hardlinked")
-            for item in selected_items:
-                flash(
-                    Markup(
-                        f"Hardlinked&nbsp;<strong>{item}</strong>&nbsp;from&nbsp;<strong>{selected_source_dir}</strong>&nbsp;to&nbsp;<strong>{selected_target_dir}</strong>&nbsp;\u2713"
+            app.logger.info("Handling POST request completed, files linked")
+
+            if link_type == "hard":
+                for item in selected_items:
+                    flash(
+                        Markup(
+                            f"Hardlinked&nbsp;<strong>{item}</strong>&nbsp;from&nbsp;<strong>{selected_source_dir}</strong>&nbsp;to&nbsp;<strong>{selected_target_dir}</strong>&nbsp;\u2713"
+                        )
                     )
-                )
+
+            elif link_type == "symbolic":
+                for item in selected_items:
+                    flash(
+                        Markup(
+                            f"Symbolically Linked&nbsp;<strong>{item}</strong>&nbsp;from&nbsp;<strong>{selected_source_dir}</strong>&nbsp;to&nbsp;<strong>{selected_target_dir}</strong>&nbsp;\u2713"
+                        )
+                    )
 
             return redirect(url_for("base"))
 
