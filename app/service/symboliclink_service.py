@@ -6,7 +6,6 @@ def create_file_or_directory_symlink(source_file, target_dir):
     target_file = os.path.join(target_dir, os.path.basename(source_file))
     app.logger.info(f"Creating symbolic link for file: {source_file} -> {target_file}")
     if not os.path.islink(target_file):
-        app.logger.info(f"This is happening")
         os.symlink(source_file, target_file)
 
 

@@ -42,7 +42,8 @@ href="{{ url_for('static', filename='file_selector.css') }}"
         </select>
         <br><br>
         {% if selected_source_dir %}
-            <h2>Select Files or Directories to HardLink:</h2>
+            <h2>Select Files or Directories to Link:</h2>
+            <div class="item_list">
             <ul>
                 {% for item in items %}
                     <li>
@@ -51,15 +52,15 @@ href="{{ url_for('static', filename='file_selector.css') }}"
                     </li>
                 {% endfor %}
             </ul>
+            </div>
             <input type="hidden" name="selected_source_dir" value="{{ selected_source_dir }}">
             <input type="hidden" name="selected_target_dir" value="{{ selected_target_dir }}">
-            <div style="display: flex; justify-content: center;">
                 <div class="button_group">
                     <input type="hidden" name="link_type" id="link_type">
-                    <button id=hardlink_button type="submit" formaction="" formmethod="post" onclick="setLinkType('hard')">Hard Link PROTOTYPE RESTYLE</button>
-                    <button id=symboliclink_button type="submit" formaction="" formmethod="post" onclick="setLinkType('symbolic')">Symbolic Link PROTOTYPE RESTYLE</button>
+                    <button id=hardlink_button type="submit" formaction="" formmethod="post" onclick="setLinkType('hard')">Hard Link</button>
+                    <br><br>
+                    <button id=symboliclink_button type="submit" formaction="" formmethod="post" onclick="setLinkType('symbolic')">Symbolic Link</button>
                 </div>
-            </div>
         {% endif %}
     </form>
 

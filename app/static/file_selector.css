@@ -33,6 +33,15 @@ form {
   color: white;
 }
 
+.item_list {
+  align-items: center !important;
+  display: flex !important;
+  flex-direction: column !important;
+  justify-content: center !important;
+  margin: 0 auto !important;
+  width: 100% !important;
+}
+
 /* Unordered list style */
 ul {
   list-style-type: none;
@@ -68,14 +77,14 @@ label {
 /* Button styling */
 .button-group {
   display: flex;
-  justify-content: space-evenly; /* equal space around buttons */
-  align-items: center;
-  width: 100%; /* or set a fixed width like 80% if needed */
+  justify-content: space-between;
+  width: 100%; /* or a fixed width if desired */
+  padding: 10px; /* optional */
 }
 
 #hardlink_button,
 #symboliclink_button {
-  width: 45%; /* Adjust width so there's space around them */
+  width: 100%; /* Adjust width so there's space around them */
   padding: 10px 20px;
   border: none;
   border-radius: 5px;
@@ -94,9 +103,12 @@ label {
 }
 
 /* Button hover effect */
-#hardlink_button:hover,
+#hardlink_button:hover {
+  background-color: #08ee99;
+}
+
 #symboliclink_button:hover {
-  background-color: #04aa6d;
+  background-color: #7a00b3;
 }
 
 /* Flash message styles */
