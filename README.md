@@ -1,6 +1,6 @@
 <h1 align="center">
   <br>
-  <a href="http://www.amitmerchant.com/electron-markdownify"><img src="https://raw.githubusercontent.com/imadahmad97/imadahmad/refs/heads/master/myroot/hosted-links/linkarr_logo.png" alt="Markdownify" width="200"></a>
+  <img src="app/static/linkarr_logo_no_background.png" alt="Markdownify" width="200">
   <br>
   Linkarr
   <br>
