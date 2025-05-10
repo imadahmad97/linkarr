@@ -1,6 +1,6 @@
 from flask import render_template, request, redirect, url_for, flash, Markup
 from app.controller.file_selector_page.handle_post_request import (
-    handle_post_request_for_file_selector,
+    handle_link_request,
 )
 from app.controller.file_selector_page.handle_get_request import (
     handle_get_request_for_file_selector,
@@ -25,11 +25,13 @@ def init_routes(app):
             app.logger.info(f"Selected source dir: {selected_source_dir}")
             selected_target_dir = request.form.get("selected_target_dir")
             app.logger.info(f"Selected target dir: {selected_target_dir}")
+            link_type = request.form.get("link_type")
+            app.logger.info(f"Selected link type: {link_type}")
             selected_items = request.form.getlist("selected_items")
             app.logger.info(f"Selected items: {selected_items}")
 
-            handle_post_request_for_file_selector(
-                selected_source_dir, selected_target_dir, selected_items
+            handle_link_request(
+                selected_source_dir, selected_target_dir, link_type, selected_items
             )
             app.logger.info("Handling POST request completed, files hardlinked")
             for item in selected_items:

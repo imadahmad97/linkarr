@@ -4,9 +4,16 @@ from flask import current_app as app
 
 
 class UserSelection:
-    def __init__(self, selected_source_dir, selected_target_dir, selected_items=None):
+    def __init__(
+        self,
+        selected_source_dir,
+        selected_target_dir,
+        link_type="hard",
+        selected_items=None,
+    ):
         self.selected_source_dir = selected_source_dir
         self.selected_target_dir = selected_target_dir
+        self.link_type = link_type
         self.selected_items = selected_items
 
     def validate_directories_are_selected(self):

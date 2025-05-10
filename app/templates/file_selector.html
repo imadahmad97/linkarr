@@ -10,6 +10,12 @@ rel="stylesheet"
 type="text/css"
 href="{{ url_for('static', filename='file_selector.css') }}"
 />
+<script>
+    function setLinkType(type) {
+      document.getElementById("link_type").value = type;
+    }
+  </script>
+  
 {% endblock %}
 
 {% block content %}
@@ -47,7 +53,13 @@ href="{{ url_for('static', filename='file_selector.css') }}"
             </ul>
             <input type="hidden" name="selected_source_dir" value="{{ selected_source_dir }}">
             <input type="hidden" name="selected_target_dir" value="{{ selected_target_dir }}">
-            <button id=button1 type="submit" formaction="" formmethod="post">Submit</button>
+            <div style="display: flex; justify-content: center;">
+                <div class="button_group">
+                    <input type="hidden" name="link_type" id="link_type">
+                    <button id=hardlink_button type="submit" formaction="" formmethod="post" onclick="setLinkType('hard')">Hard Link PROTOTYPE RESTYLE</button>
+                    <button id=symboliclink_button type="submit" formaction="" formmethod="post" onclick="setLinkType('symbolic')">Symbolic Link PROTOTYPE RESTYLE</button>
+                </div>
+            </div>
         {% endif %}
     </form>
 

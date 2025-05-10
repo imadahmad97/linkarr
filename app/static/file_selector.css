@@ -66,21 +66,36 @@ label {
 }
 
 /* Button styling */
-#button1 {
-  width: 100%;
+.button-group {
+  display: flex;
+  justify-content: space-evenly; /* equal space around buttons */
+  align-items: center;
+  width: 100%; /* or set a fixed width like 80% if needed */
+}
+
+#hardlink_button,
+#symboliclink_button {
+  width: 45%; /* Adjust width so there's space around them */
   padding: 10px 20px;
-  background-color: #04aa6d;
   border: none;
   border-radius: 5px;
   color: #fff;
   font-size: 1.2em;
   cursor: pointer;
   transition: background-color 0.3s ease;
-  margin-top: 20px;
+}
+
+#hardlink_button {
+  background-color: #04aa6d;
+}
+
+#symboliclink_button {
+  background-color: #4b0082;
 }
 
 /* Button hover effect */
-#button1:hover {
+#hardlink_button:hover,
+#symboliclink_button:hover {
   background-color: #04aa6d;
 }
 
