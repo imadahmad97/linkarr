@@ -11,9 +11,30 @@ type="text/css"
 href="{{ url_for('static', filename='file_selector.css') }}"
 />
 <script>
-    function setLinkType(type) {
-      document.getElementById("link_type").value = type;
-    }
+  function prepareForm(linkType, event) {
+    event.preventDefault(); // Stop immediate form submission
+
+    const checkboxes = document.querySelectorAll('.item-checkbox:checked');
+    const container = document.getElementById('selected-items-hidden-container');
+    const form = document.getElementById('bottom-button-form');
+
+    // Clear previous hidden inputs
+    container.innerHTML = '';
+
+    // Set the link type
+    document.getElementById("link_type").value = linkType;
+
+    // Append each selected item
+    checkboxes.forEach((cb) => {
+      const input = document.createElement('input');
+      input.type = 'hidden';
+      input.name = 'selected_items';
+      input.value = cb.value;
+      container.appendChild(input);
+    });
+
+    form.submit(); // Manually submit form after appending
+  }
   </script>
   
 {% endblock %}
@@ -45,15 +66,31 @@ href="{{ url_for('static', filename='file_selector.css') }}"
         <br><br>
     </div>
 </form>
-<form action="" method="post"
         <div class="item_selector_form">
             <div class="item_list">
                 {% if selected_source_dir and selected_target_dir %}
             <ul>
                 {% for item in items %}
                     <li>
-                        <input type="checkbox" name="selected_items" value="{{ item }}" id="item_{{ loop.index0 }}">
+                        <input type="checkbox" name="selected_items" value="{{ item }}" id="item_{{ loop.index0 }}" class="item-checkbox">
                         <label for="item_{{ loop.index0 }}">{{ item }}</label>
+                        
+                        <form action="" method="post" style="display:inline;">
+                            <input type="hidden" name="selected_items" value="{{ item }}">
+                            <input type="hidden" name="selected_source_dir" value="{{ selected_source_dir }}">
+                            <input type="hidden" name="selected_target_dir" value="{{ selected_target_dir }}">
+                            <input type="hidden" name="link_type" value="hard">
+                            <button id="quick_hardlink_button" type="submit">Quick Hard Link</button>
+                        </form>
+                        
+                        <form action="" method="post" style="display:inline;">
+                            <input type="hidden" name="selected_items" value="{{ item }}">
+                            <input type="hidden" name="selected_source_dir" value="{{ selected_source_dir }}">
+                            <input type="hidden" name="selected_target_dir" value="{{ selected_target_dir }}">
+                            <input type="hidden" name="link_type" value="symbolic">
+                            <button id="quick_symboliclink_button" type="submit">Quick Symlink</button>
+                        </form>
+                                            
                     </li>
                 {% endfor %}
             </ul>
@@ -63,14 +100,17 @@ href="{{ url_for('static', filename='file_selector.css') }}"
             </div>
         </div>
     </div>
+    <form id="bottom-button-form" action="" method="post">
             <div class="button_form">
             <input type="hidden" name="selected_source_dir" value="{{ selected_source_dir }}">
             <input type="hidden" name="selected_target_dir" value="{{ selected_target_dir }}">
                 <div class="button_group">
                     <input type="hidden" name="link_type" id="link_type">
-                    <button id="hardlink_button" type="submit" formaction="" formmethod="post" onclick="setLinkType('hard')" disabled>Hard Link</button>
+                    <div id="selected-items-hidden-container"></div>
+                    <button id="hardlink_button" type="submit" onclick="prepareForm('hard', event)" disabled>Hard Link</button>
                     <br><br>
-                    <button id="symboliclink_button" type="submit" formaction="" formmethod="post" onclick="setLinkType('symbolic')" disabled>Symbolic Link</button>                     
+                    <button id="symboliclink_button" type="submit" onclick="prepareForm('symbolic', event)" disabled>Symbolic Link</button>
+                                     
                 </div>
 </div>
 </form>

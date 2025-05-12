@@ -168,5 +168,5 @@ ipython_config.py
 */config/*
 *.config
 
-*/test/*
-
+test_source_dir/
+test_target_dir/

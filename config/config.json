@@ -1,0 +1,8 @@
+{
+    "source_dirs": [
+        "test_source_dir"
+    ],
+    "target_dirs": [
+        "test_target_dir"
+    ]
+}

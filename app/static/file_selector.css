@@ -33,6 +33,10 @@ h2 {
   background-color: #121212;
 }
 
+.item_selector_form {
+  max-width: 1400px !important;
+  min-height: 300px !important;
+}
 .top_forms_container {
   display: flex;
   justify-content: center;
@@ -43,8 +47,9 @@ h2 {
 .source_and_target_dir_form,
 .item_selector_form {
   flex: 1;
-  min-width: 300px; /* for responsiveness */
-  max-width: 600px;
+  min-width: 200px; /* for responsiveness */
+  max-width: 200px;
+  min-height: 300px; /* for responsiveness */
 }
 
 .dark-mode h2 {
@@ -52,7 +57,8 @@ h2 {
 }
 
 .item_list {
-  height: 200px; /* fixed height */
+  height: 300px; /* fixed height */
+  width: 500px;
   overflow-y: auto;
   align-items: left !important;
   display: flex !important;
@@ -116,6 +122,23 @@ label {
   transition: background-color 0.3s ease;
 }
 
+#quick_hardlink_button,
+#quick_symboliclink_button {
+  border: none;
+  border-radius: 5px;
+  color: #fff;
+  font-size: 1em;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  margin: 10px;
+}
+
+#quick_hardlink_button {
+  background-color: #04aa6d;
+}
+#quick_symboliclink_button {
+  background-color: #4b0082;
+}
 #hardlink_button {
   background-color: #04aa6d;
 }
@@ -141,7 +164,7 @@ button:disabled {
 
 /* Flash message styles */
 .flashes {
-  max-width: 600px;
+  max-width: 1500px;
   margin: 20px auto;
   padding: 10px;
   border-radius: 5px;
