@@ -51,7 +51,13 @@ def init_routes(app):
                         )
                     )
 
-            return redirect(url_for("base"))
+            return redirect(
+                url_for(
+                    "base",
+                    selected_source_dir=selected_source_dir,
+                    selected_target_dir=selected_target_dir,
+                )
+            )
 
         elif request.method == "GET":
             app.logger.info("Handling GET request for file selector")

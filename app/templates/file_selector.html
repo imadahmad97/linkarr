@@ -19,8 +19,10 @@ href="{{ url_for('static', filename='file_selector.css') }}"
 {% endblock %}
 
 {% block content %}
-    <h2>Select Source and Target Directories:</h2>
-    <form action="" method="get">
+    <h2>Select Items for Linking</h2>
+    <div class="top_forms_container">
+    <div class="source_and_target_dir_form">
+        <form action="" method="get">
         <label for="source_dir"><h3>Source Directory:</h3></label>
         <select name="selected_source_dir" id="source_dir" onchange="checkAndSubmit()">
             <option value="">-- Select Source Directory --</option>
@@ -41,9 +43,12 @@ href="{{ url_for('static', filename='file_selector.css') }}"
             {% endfor %}
         </select>
         <br><br>
-        {% if selected_source_dir %}
-            <h2>Select Files or Directories to Link:</h2>
+    </div>
+</form>
+<form action="" method="post"
+        <div class="item_selector_form">
             <div class="item_list">
+                {% if selected_source_dir and selected_target_dir %}
             <ul>
                 {% for item in items %}
                     <li>
@@ -52,17 +57,24 @@ href="{{ url_for('static', filename='file_selector.css') }}"
                     </li>
                 {% endfor %}
             </ul>
+            {% else %}
+                <p>Once you select a source and target directory, your linkable items will appear here</p>
+            {% endif %}
             </div>
+        </div>
+    </div>
+            <div class="button_form">
             <input type="hidden" name="selected_source_dir" value="{{ selected_source_dir }}">
             <input type="hidden" name="selected_target_dir" value="{{ selected_target_dir }}">
                 <div class="button_group">
                     <input type="hidden" name="link_type" id="link_type">
-                    <button id=hardlink_button type="submit" formaction="" formmethod="post" onclick="setLinkType('hard')">Hard Link</button>
+                    <button id="hardlink_button" type="submit" formaction="" formmethod="post" onclick="setLinkType('hard')" disabled>Hard Link</button>
                     <br><br>
-                    <button id=symboliclink_button type="submit" formaction="" formmethod="post" onclick="setLinkType('symbolic')">Symbolic Link</button>
+                    <button id="symboliclink_button" type="submit" formaction="" formmethod="post" onclick="setLinkType('symbolic')" disabled>Symbolic Link</button>                     
                 </div>
-        {% endif %}
-    </form>
+</div>
+</form>
+
 
     {% with messages = get_flashed_messages(with_categories=true) %}
         {% if messages %}
@@ -82,5 +94,22 @@ href="{{ url_for('static', filename='file_selector.css') }}"
             document.forms[0].submit();
           }
         }
+
+        function toggleButtons() {
+            const source = document.getElementById('source_dir').value;
+            const target = document.getElementById('target_dir').value;
+            const hardBtn = document.getElementById('hardlink_button');
+            const symbolicBtn = document.getElementById('symboliclink_button');
+
+            const enable = source && target;
+            hardBtn.disabled = !enable;
+            symbolicBtn.disabled = !enable;
+        }
+
+        document.getElementById('source_dir').addEventListener('change', toggleButtons);
+        document.getElementById('target_dir').addEventListener('change', toggleButtons);
+
+        // In case both are pre-filled from a GET request
+        window.addEventListener('DOMContentLoaded', toggleButtons);
       </script>
 {% endblock %}

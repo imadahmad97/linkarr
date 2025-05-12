@@ -16,7 +16,9 @@ h2 {
 }
 
 /* Form styling */
-form {
+.source_and_target_dir_form,
+.item_selector_form,
+.button_form {
   max-width: 600px;
   margin: 0 auto;
   padding: 20px;
@@ -25,8 +27,24 @@ form {
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
-.dark-mode form {
+.dark-mode .source_and_target_dir_form,
+.dark-mode .item_selector_form,
+.dark-mode .button_form {
   background-color: #121212;
+}
+
+.top_forms_container {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap; /* allow wrapping on small screens */
+  margin-bottom: 30px;
+}
+
+.source_and_target_dir_form,
+.item_selector_form {
+  flex: 1;
+  min-width: 300px; /* for responsiveness */
+  max-width: 600px;
 }
 
 .dark-mode h2 {
@@ -34,7 +52,9 @@ form {
 }
 
 .item_list {
-  align-items: center !important;
+  height: 200px; /* fixed height */
+  overflow-y: auto;
+  align-items: left !important;
   display: flex !important;
   flex-direction: column !important;
   justify-content: center !important;
@@ -111,6 +131,12 @@ label {
 
 #symboliclink_button:hover {
   background-color: #7a00b3;
+}
+
+button:disabled {
+  background-color: #888;
+  cursor: not-allowed;
+  opacity: 0.6;
 }
 
 /* Flash message styles */
