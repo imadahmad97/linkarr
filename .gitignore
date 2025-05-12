@@ -165,3 +165,8 @@ ipython_config.py
 .DS_Store
 *.DS_Store
 
+*/config/*
+*.config
+
+*/test/*
+
