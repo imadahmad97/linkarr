@@ -10,32 +10,7 @@ rel="stylesheet"
 type="text/css"
 href="{{ url_for('static', filename='file_selector.css') }}"
 />
-<script>
-  function prepareForm(linkType, event) {
-    event.preventDefault(); // Stop immediate form submission
-
-    const checkboxes = document.querySelectorAll('.item-checkbox:checked');
-    const container = document.getElementById('selected-items-hidden-container');
-    const form = document.getElementById('bottom-button-form');
-
-    // Clear previous hidden inputs
-    container.innerHTML = '';
-
-    // Set the link type
-    document.getElementById("link_type").value = linkType;
-
-    // Append each selected item
-    checkboxes.forEach((cb) => {
-      const input = document.createElement('input');
-      input.type = 'hidden';
-      input.name = 'selected_items';
-      input.value = cb.value;
-      container.appendChild(input);
-    });
-
-    form.submit(); // Manually submit form after appending
-  }
-  </script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
   
 {% endblock %}
 
@@ -65,13 +40,24 @@ href="{{ url_for('static', filename='file_selector.css') }}"
         </select>
         <br><br>
     </div>
+
 </form>
+
         <div class="item_selector_form">
+            <div class="wrap">
+                <div class="search">
+                    <input type="text" id="searchInput" class="searchTerm" placeholder="Search your files/directories here...">
+                   <button type="submit" class="searchButton">
+                     <i class="fa fa-search"></i>
+                  </button>
+                </div>
+             </div>
             <div class="item_list">
                 {% if selected_source_dir and selected_target_dir %}
-            <ul>
+
+                <ul id="itemList">
                 {% for item in items %}
-                    <li>
+                    <li class="searchable-item">
                         <input type="checkbox" name="selected_items" value="{{ item }}" id="item_{{ loop.index0 }}" class="item-checkbox">
                         <label for="item_{{ loop.index0 }}">{{ item }}</label>
                         
@@ -149,7 +135,42 @@ href="{{ url_for('static', filename='file_selector.css') }}"
         document.getElementById('source_dir').addEventListener('change', toggleButtons);
         document.getElementById('target_dir').addEventListener('change', toggleButtons);
 
+        function prepareForm(linkType, event) {
+            event.preventDefault(); // Stop immediate form submission
+
+            const checkboxes = document.querySelectorAll('.item-checkbox:checked');
+            const container = document.getElementById('selected-items-hidden-container');
+            const form = document.getElementById('bottom-button-form');
+
+            // Clear previous hidden inputs
+            container.innerHTML = '';
+
+            // Set the link type
+            document.getElementById("link_type").value = linkType;
+
+            // Append each selected item
+            checkboxes.forEach((cb) => {
+            const input = document.createElement('input');
+            input.type = 'hidden';
+            input.name = 'selected_items';
+            input.value = cb.value;
+            container.appendChild(input);
+            });
+
+            form.submit(); // Manually submit form after appending
+        }
+
         // In case both are pre-filled from a GET request
         window.addEventListener('DOMContentLoaded', toggleButtons);
+
+        document.getElementById('searchInput').addEventListener('input', function () {
+            const filter = this.value.toLowerCase();
+            const items = document.querySelectorAll('.searchable-item');
+
+            items.forEach(item => {
+                const text = item.textContent.toLowerCase();
+                item.style.display = text.includes(filter) ? '' : 'none';
+            });
+        });
       </script>
 {% endblock %}

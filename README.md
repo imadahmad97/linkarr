@@ -6,7 +6,7 @@
   <br>
 </h1>
 
-<h4 align="center">A simple graphical tool for hardlinking files, built with Python and Flask.</h4>
+<h4 align="center">A simple graphical tool for linking files, built with Python and Flask.</h4>
 
 <p align="center">
   <a href="https://www.python.org">
@@ -25,27 +25,24 @@
 <p align="center">
   <a href="#about">About</a> •
   <a href="#features">Features</a> •
-  <a href="#installation">Installation</a> •
+  <a href="#installation">Installation</a>
 </p>
 
 ![](app/static/linkarr_demo_gif.gif)
 
 ## About
 
-Linkarr is a simple graphical tool for hardlinking files, built with Python and Flask. It allows users to easily create hard links between files, making it easier to manage and organize their file system. The application is designed to be user-friendly and intuitive, making it accessible to users of all skill levels.
+Linkarr is a simple graphical tool for linking files, built with Python and Flask. It allows users to easily create both hard and symbolic links between files, making it easier to manage and organize their file system. The application is designed to be user-friendly and intuitive, making it accessible to users of all skill levels.
 
 ## Features
 
-- **File Hardlinking**: Create hard links between files with a graphical interface.
-- **Directory Hardlinking**: Create hard links between directories with a graphical interface.
+- **File/Directory Hard and Symbolic Linking**: Create both hard and symlinks between files/directories with a graphical interface.
 
 ##### Features to be added:
 
-- **Symlink Support**: Create symbolic links between files and directories.
 - **Automatic File Detection**: Automatically detect files and directories and hardlink them.
 - **Remove Hardlinks**: Remove hard links from files and directories.
 - **Detect Hardlinks**: Detect hard links in files and directories.
-- **Dark Mode**: A dark mode theme option for the application.
 
 ## Installation and Usage
 
