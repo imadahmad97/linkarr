@@ -56,29 +56,42 @@ href="{{ url_for('static', filename='file_selector.css') }}"
                 {% if selected_source_dir and selected_target_dir %}
 
                 <ul id="itemList">
-                {% for item in items %}
-                    <li class="searchable-item" data-name="{{ item }}">
-                        <input type="checkbox" name="selected_items" value="{{ item }}" id="item_{{ loop.index0 }}" class="item-checkbox">
-                        <label for="item_{{ loop.index0 }}">{{ item }}</label>
-                        
+                    {% for item in items %}
+                    <li class="searchable-item" data-name="{{ item.name }}">
+                        <input type="checkbox" name="selected_items" value="{{ item.name }}" id="item_{{ loop.index0 }}" class="item-checkbox">
+                        <label for="item_{{ loop.index0 }}">{{ item.name }}</label>
+                
                         <form action="" method="post" style="display:inline;">
-                            <input type="hidden" name="selected_items" value="{{ item }}">
+                            <input type="hidden" name="selected_items" value="{{ item.name }}">
                             <input type="hidden" name="selected_source_dir" value="{{ selected_source_dir }}">
                             <input type="hidden" name="selected_target_dir" value="{{ selected_target_dir }}">
                             <input type="hidden" name="link_type" value="hard">
-                            <button id="quick_hardlink_button" type="submit">Quick Hard Link</button>
+                            <button id="quick_hardlink_button" type="submit"
+                                    {% if item.hardlink_status %}disabled class="disabled-button"{% endif %}>
+                                Quick Hard Link
+                            </button>
+
                         </form>
-                        
+                
                         <form action="" method="post" style="display:inline;">
-                            <input type="hidden" name="selected_items" value="{{ item }}">
+                            <input type="hidden" name="selected_items" value="{{ item.name }}">
                             <input type="hidden" name="selected_source_dir" value="{{ selected_source_dir }}">
                             <input type="hidden" name="selected_target_dir" value="{{ selected_target_dir }}">
                             <input type="hidden" name="link_type" value="symbolic">
-                            <button id="quick_symboliclink_button" type="submit">Quick Symlink</button>
+                            <button id="quick_symboliclink_button" type="submit"
+                                    {% if item.symbolic_link_status %}disabled class="disabled-button"{% endif %}>
+                                Quick Symlink
+                            </button>
+                            {% if item.symbolic_link_status %}
+                                <span class="link-status">✅ Already symlinked</span>
+                            {% endif %}
+                            {% if item.hardlink_status %}
+                            <span class="link-status">✅ Already hardlinked</span>
+                            {% endif %}
                         </form>
-                                            
                     </li>
                 {% endfor %}
+                
             </ul>
             {% else %}
                 <p>Once you select a source and target directory, your linkable items will appear here</p>
