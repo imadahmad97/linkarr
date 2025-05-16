@@ -11,7 +11,7 @@ type="text/css"
 href="{{ url_for('static', filename='file_selector.css') }}"
 />
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-  
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.6.2/dist/fuse.min.js"></script> 
 {% endblock %}
 
 {% block content %}
@@ -47,7 +47,7 @@ href="{{ url_for('static', filename='file_selector.css') }}"
             <div class="wrap">
                 <div class="search">
                     <input type="text" id="searchInput" class="searchTerm" placeholder="Search your files/directories here...">
-                   <button type="submit" class="searchButton">
+                   <button type="button" class="searchButton">
                      <i class="fa fa-search"></i>
                   </button>
                 </div>
@@ -57,7 +57,7 @@ href="{{ url_for('static', filename='file_selector.css') }}"
 
                 <ul id="itemList">
                 {% for item in items %}
-                    <li class="searchable-item">
+                    <li class="searchable-item" data-name="{{ item }}">
                         <input type="checkbox" name="selected_items" value="{{ item }}" id="item_{{ loop.index0 }}" class="item-checkbox">
                         <label for="item_{{ loop.index0 }}">{{ item }}</label>
                         
@@ -163,14 +163,40 @@ href="{{ url_for('static', filename='file_selector.css') }}"
         // In case both are pre-filled from a GET request
         window.addEventListener('DOMContentLoaded', toggleButtons);
 
-        document.getElementById('searchInput').addEventListener('input', function () {
-            const filter = this.value.toLowerCase();
-            const items = document.querySelectorAll('.searchable-item');
+        document.addEventListener('DOMContentLoaded', function () {
+    toggleButtons(); // Ensure buttons are toggled correctly on load
 
-            items.forEach(item => {
-                const text = item.textContent.toLowerCase();
-                item.style.display = text.includes(filter) ? '' : 'none';
-            });
-        });
+    const items = Array.from(document.querySelectorAll('.searchable-item'));
+    const fuseData = items.map(item => ({
+        el: item,
+        name: item.dataset.name
+    }));
+
+    const fuse = new Fuse(fuseData, {
+        keys: ['name'],
+        threshold: 0.4, // 0.0 is exact match, 1.0 is match everything — 0.4 is good default
+        ignoreLocation: true
+    });
+
+    const searchInput = document.getElementById('searchInput');
+    searchInput.addEventListener('input', function () {
+        const query = this.value.trim();
+
+        // Reset all items
+        items.forEach(item => item.style.display = 'none');
+
+        // If no query, show all
+        if (!query) {
+            items.forEach(item => item.style.display = '');
+            return;
+        }
+
+        // Get Fuse.js results
+        const results = fuse.search(query).map(r => r.item.el);
+
+        // Show only matched items
+        results.forEach(item => item.style.display = '');
+    });
+});
       </script>
 {% endblock %}
