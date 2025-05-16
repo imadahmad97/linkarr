@@ -58,41 +58,56 @@ href="{{ url_for('static', filename='file_selector.css') }}"
                 <ul id="itemList">
                     {% for item in items %}
                     <li class="searchable-item" data-name="{{ item.name }}">
-                        <input type="checkbox" name="selected_items" value="{{ item.name }}" id="item_{{ loop.index0 }}" class="item-checkbox">
-                        <label for="item_{{ loop.index0 }}">{{ item.name }}</label>
-                
-                        <form action="" method="post" style="display:inline;">
+                      <div class="item-row">
+                        <!-- Column 1: filename + checkbox -->
+                        <div class="col file-col">
+                          <input type="checkbox" name="selected_items" value="{{ item.name }}"
+                                 id="item_{{ loop.index0 }}" class="item-checkbox">
+                          <label for="item_{{ loop.index0 }}">{{ item.name }}</label>
+                        </div>
+                  
+                        <!-- Column 2: Quick Hard Link -->
+                        <div class="col hardlink-col">
+                          <form action="" method="post">
                             <input type="hidden" name="selected_items" value="{{ item.name }}">
                             <input type="hidden" name="selected_source_dir" value="{{ selected_source_dir }}">
                             <input type="hidden" name="selected_target_dir" value="{{ selected_target_dir }}">
                             <input type="hidden" name="link_type" value="hard">
                             <button id="quick_hardlink_button" type="submit"
                                     {% if item.hardlink_status %}disabled class="disabled-button"{% endif %}>
-                                Quick Hard Link
+                              Quick Hard Link
                             </button>
-
-                        </form>
-                
-                        <form action="" method="post" style="display:inline;">
+                          </form>
+                        </div>
+                  
+                        <!-- Column 3: Quick Symlink -->
+                        <div class="col symlink-col">
+                          <form action="" method="post">
                             <input type="hidden" name="selected_items" value="{{ item.name }}">
                             <input type="hidden" name="selected_source_dir" value="{{ selected_source_dir }}">
                             <input type="hidden" name="selected_target_dir" value="{{ selected_target_dir }}">
                             <input type="hidden" name="link_type" value="symbolic">
                             <button id="quick_symboliclink_button" type="submit"
                                     {% if item.symbolic_link_status %}disabled class="disabled-button"{% endif %}>
-                                Quick Symlink
+                              Quick Symlink
                             </button>
-                            {% if item.symbolic_link_status %}
-                                <span class="link-status">✅ Already symlinked</span>
-                            {% endif %}
-                            {% if item.hardlink_status %}
+                          </form>
+                        </div>
+                  
+                        <!-- Column 4: status badges -->
+                        <div class="col status-col">
+                          {% if item.hardlink_status %}
                             <span class="link-status">✅ Already hardlinked</span>
-                            {% endif %}
-                        </form>
+                          {% endif %}
+                          {% if item.symbolic_link_status %}
+                            <span class="link-status">✅ Already symlinked</span>
+                          {% endif %}
+                        </div>
+                      </div>
                     </li>
-                {% endfor %}
-                
-            </ul>
+                    {% endfor %}
+                  </ul>
+                   
             {% else %}
                 <p>Once you select a source and target directory, your linkable items will appear here</p>
             {% endif %}

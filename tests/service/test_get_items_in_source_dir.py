@@ -1,4 +1,4 @@
-from app.service.get_items_in_source_dir import get_items_in_source_dir
+from app.service.item_list_building_service import get_items_in_source_dir
 
 
 def test_get_items_in_source_dir():
