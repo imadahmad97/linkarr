@@ -66,6 +66,18 @@ href="{{ url_for('static', filename='file_selector.css') }}"
                           <label for="item_{{ loop.index0 }}">{{ item.name }}</label>
                         </div>
                   
+                        {% if item.hardlink_status or item.symbolic_link_status %}
+                        <!-- Combined Unlink Button -->
+                        <div class="col unlink-col" colspan="2">
+                          <form action="{{ url_for('remove_link') }}" method="post">
+                            <input type="hidden" name="selected_items" value="{{ item.name }}">
+                            <input type="hidden" name="selected_source_dir" value="{{ selected_source_dir }}">
+                            <input type="hidden" name="selected_target_dir" value="{{ selected_target_dir }}">
+                            <input type="hidden" name="unlink" value="true">
+                            <button type="submit" class="unlink-button">Unlink</button>
+                          </form>
+                        </div>
+                      {% else %}
                         <!-- Column 2: Quick Hard Link -->
                         <div class="col hardlink-col">
                           <form action="" method="post">
@@ -73,13 +85,12 @@ href="{{ url_for('static', filename='file_selector.css') }}"
                             <input type="hidden" name="selected_source_dir" value="{{ selected_source_dir }}">
                             <input type="hidden" name="selected_target_dir" value="{{ selected_target_dir }}">
                             <input type="hidden" name="link_type" value="hard">
-                            <button id="quick_hardlink_button" type="submit"
-                                    {% if item.hardlink_status %}disabled class="disabled-button"{% endif %}>
+                            <button id="quick_hardlink_button" type="submit">
                               Quick Hard Link
                             </button>
                           </form>
                         </div>
-                  
+                      
                         <!-- Column 3: Quick Symlink -->
                         <div class="col symlink-col">
                           <form action="" method="post">
@@ -87,20 +98,21 @@ href="{{ url_for('static', filename='file_selector.css') }}"
                             <input type="hidden" name="selected_source_dir" value="{{ selected_source_dir }}">
                             <input type="hidden" name="selected_target_dir" value="{{ selected_target_dir }}">
                             <input type="hidden" name="link_type" value="symbolic">
-                            <button id="quick_symboliclink_button" type="submit"
-                                    {% if item.symbolic_link_status %}disabled class="disabled-button"{% endif %}>
+                            <button id="quick_symboliclink_button" type="submit">
                               Quick Symlink
                             </button>
                           </form>
                         </div>
+                      {% endif %}
+                       
                   
                         <!-- Column 4: status badges -->
                         <div class="col status-col">
                           {% if item.hardlink_status %}
-                            <span class="link-status">✅ Already hardlinked</span>
+                            <span class="link-status">✅ Hardlinked</span>
                           {% endif %}
                           {% if item.symbolic_link_status %}
-                            <span class="link-status">✅ Already symlinked</span>
+                            <span class="link-status">✅ Symlinked</span>
                           {% endif %}
                         </div>
                       </div>

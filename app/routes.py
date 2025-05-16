@@ -8,6 +8,9 @@ from app.controller.file_selector_page.handle_get_request import (
 from app.controller.config_page.handle_post_request import (
     handle_post_request_for_config_page,
 )
+from app.controller.file_selector_page.handle_link_removal_request import (
+    handle_link_removal_request,
+)
 from .model.config import Config
 import logging
 
@@ -83,6 +86,26 @@ def init_routes(app):
                 selected_source_dir=selected_source_dir,
                 selected_target_dir=selected_target_dir,
             )
+
+    @app.route("/remove_link", methods=["POST"])
+    def remove_link():
+        app.logger.info("Handling POST request for remove link")
+        selected_source_dir = request.form.get("selected_source_dir")
+        app.logger.info(f"Selected source dir: {selected_source_dir}")
+        selected_target_dir = request.form.get("selected_target_dir")
+        app.logger.info(f"Selected target dir: {selected_target_dir}")
+        selected_items = request.form.getlist("selected_items")
+        app.logger.info(f"Selected items: {selected_items}")
+
+        handle_link_removal_request(selected_target_dir, selected_items)
+        app.logger.info("Handling POST request for remove link completed")
+        return redirect(
+            url_for(
+                "base",
+                selected_source_dir=selected_source_dir,
+                selected_target_dir=selected_target_dir,
+            )
+        )
 
     @app.route("/config", methods=["GET", "POST"])
     def config():

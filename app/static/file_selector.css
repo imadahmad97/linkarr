@@ -160,6 +160,18 @@ button:disabled {
   opacity: 0.6;
 }
 
+.unlink-button {
+  border: none;
+  border-radius: 5px;
+  color: #fff;
+  background-color: #f44336;
+  font-size: 1em;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  margin: 10px;
+  width: 100%;
+}
+
 /* Flash message styles */
 .flashes {
   max-width: 1500px;
@@ -244,6 +256,8 @@ button:disabled {
 /* align status badges to the right */
 .status-col {
   text-align: right;
+  padding-left: 100px !important;
+  width: 100% !important;
 }
 
 /* Responsive design */
