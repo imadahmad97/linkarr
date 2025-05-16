@@ -57,15 +57,13 @@ h2 {
 }
 
 .item_list {
-  height: 300px; /* fixed height */
-  width: 500px;
+  height: 300px;
   overflow-y: auto;
-  align-items: left !important;
-  display: flex !important;
-  flex-direction: column !important;
-  justify-content: center !important;
-  margin: 0 auto !important;
-  width: 100% !important;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start; /* changed from center */
+  margin: 0 auto;
+  width: 100%;
 }
 
 /* Unordered list style */
