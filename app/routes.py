@@ -13,6 +13,9 @@ from app.controller.file_selector_page.handle_link_removal_request import (
 )
 from .model.config import Config
 import logging
+from app.controller.file_selector_page.handle_hardlink_request import (
+    handle_hardlink_request,
+)
 
 logger = logging.getLogger(__name__)
 
@@ -86,6 +89,22 @@ def init_routes(app):
                 selected_source_dir=selected_source_dir,
                 selected_target_dir=selected_target_dir,
             )
+
+    @app.route("/hardlink", methods=["POST"])
+    def hardlink():
+        app.logger.info("Handling POST request for file selector")
+
+        user_selection = handle_hardlink_request(request)
+
+        app.logger.info("Handling POST request completed, files linked")
+
+        return redirect(
+            url_for(
+                "base",
+                selected_source_dir=user_selection.selected_source_dir,
+                selected_target_dir=user_selection.selected_target_dir,
+            )
+        )
 
     @app.route("/remove_link", methods=["POST"])
     def remove_link():

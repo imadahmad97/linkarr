@@ -80,7 +80,7 @@ href="{{ url_for('static', filename='file_selector.css') }}"
                       {% else %}
                         <!-- Column 2: Quick Hard Link -->
                         <div class="col hardlink-col">
-                          <form action="" method="post">
+                          <form action="{{ url_for('hardlink') }}" method="post">
                             <input type="hidden" name="selected_items" value="{{ item.name }}">
                             <input type="hidden" name="selected_source_dir" value="{{ selected_source_dir }}">
                             <input type="hidden" name="selected_target_dir" value="{{ selected_target_dir }}">
@@ -93,7 +93,7 @@ href="{{ url_for('static', filename='file_selector.css') }}"
                       
                         <!-- Column 3: Quick Symlink -->
                         <div class="col symlink-col">
-                          <form action="" method="post">
+                          <form action="{{ url_for('hardlink') }}" method="post">
                             <input type="hidden" name="selected_items" value="{{ item.name }}">
                             <input type="hidden" name="selected_source_dir" value="{{ selected_source_dir }}">
                             <input type="hidden" name="selected_target_dir" value="{{ selected_target_dir }}">
