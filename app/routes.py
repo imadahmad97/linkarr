@@ -16,6 +16,9 @@ import logging
 from app.controller.file_selector_page.handle_hardlink_request import (
     handle_hardlink_request,
 )
+from app.controller.file_selector_page.handle_symlink_request import (
+    handle_symlink_request,
+)
 
 logger = logging.getLogger(__name__)
 
@@ -92,11 +95,27 @@ def init_routes(app):
 
     @app.route("/hardlink", methods=["POST"])
     def hardlink():
-        app.logger.info("Handling POST request for file selector")
+        app.logger.info("Handling hardlink request for file selector")
 
         user_selection = handle_hardlink_request(request)
 
-        app.logger.info("Handling POST request completed, files linked")
+        app.logger.info("Handling hardlink request completed, files linked")
+
+        return redirect(
+            url_for(
+                "base",
+                selected_source_dir=user_selection.selected_source_dir,
+                selected_target_dir=user_selection.selected_target_dir,
+            )
+        )
+
+    @app.route("/symlink", methods=["POST"])
+    def symlink():
+        app.logger.info("Handling symlink request for file selector")
+
+        user_selection = handle_symlink_request(request)
+
+        app.logger.info("Handling symlink request completed, files linked")
 
         return redirect(
             url_for(
