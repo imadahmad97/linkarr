@@ -1,18 +1,24 @@
-from flask import render_template, request, redirect, url_for, flash, Markup
-from app.controller.file_selector_page.handle_post_request import (
-    handle_link_request,
-)
-from app.controller.file_selector_page.handle_get_request import (
-    handle_get_request_for_file_selector,
-)
+import logging
+
+from flask import redirect, render_template, request, url_for
+
 from app.controller.config_page.handle_post_request import (
     handle_post_request_for_config_page,
+)
+from app.controller.file_selector_page.handle_get_request_for_file_selector import (
+    handle_get_request_for_file_selector,
+)
+from app.controller.file_selector_page.handle_hardlink_request import (
+    handle_hardlink_request,
 )
 from app.controller.file_selector_page.handle_link_removal_request import (
     handle_link_removal_request,
 )
+from app.controller.file_selector_page.handle_symlink_request import (
+    handle_symlink_request,
+)
+
 from .model.config import Config
-import logging
 
 logger = logging.getLogger(__name__)
 
@@ -21,89 +27,67 @@ def init_routes(app):
 
     @app.route("/", methods=["GET", "POST"])
     def base():
-        if request.method == "POST":
-            app.logger.info("Handling POST request for file selector")
+        app.logger.info("Handling GET request for file selector")
 
-            selected_source_dir = request.form.get("selected_source_dir")
-            app.logger.info(f"Selected source dir: {selected_source_dir}")
-            selected_target_dir = request.form.get("selected_target_dir")
-            app.logger.info(f"Selected target dir: {selected_target_dir}")
-            link_type = request.form.get("link_type")
-            app.logger.info(f"Selected link type: {link_type}")
-            selected_items = request.form.getlist("selected_items")
-            app.logger.info(f"Selected items: {selected_items}")
+        user_selection, items = handle_get_request_for_file_selector(request)
 
-            handle_link_request(
-                selected_source_dir, selected_target_dir, link_type, selected_items
-            )
-            app.logger.info("Handling POST request completed, files linked")
+        app.logger.info("Handling GET request for file selector completed")
 
-            if link_type == "hard":
-                for item in selected_items:
-                    flash(
-                        Markup(
-                            f"Hardlinked&nbsp;<strong>{item}</strong>&nbsp;from&nbsp;<strong>{selected_source_dir}</strong>&nbsp;to&nbsp;<strong>{selected_target_dir}</strong>&nbsp;\u2713"
-                        )
-                    )
+        return render_template(
+            "file_selector.html",
+            items=items,
+            source_dirs=Config.source_dirs,
+            target_dirs=Config.target_dirs,
+            selected_source_dir=user_selection.selected_source_dir,
+            selected_target_dir=user_selection.selected_target_dir,
+        )
 
-            elif link_type == "symbolic":
-                for item in selected_items:
-                    flash(
-                        Markup(
-                            f"Symbolically Linked&nbsp;<strong>{item}</strong>&nbsp;from&nbsp;<strong>{selected_source_dir}</strong>&nbsp;to&nbsp;<strong>{selected_target_dir}</strong>&nbsp;\u2713"
-                        )
-                    )
+    @app.route("/hardlink", methods=["POST"])
+    def hardlink():
+        app.logger.info("Handling hardlink request for file selector")
 
-            return redirect(
-                url_for(
-                    "base",
-                    selected_source_dir=selected_source_dir,
-                    selected_target_dir=selected_target_dir,
-                )
-            )
+        user_selection = handle_hardlink_request(request)
 
-        elif request.method == "GET":
-            app.logger.info("Handling GET request for file selector")
+        app.logger.info("Handling hardlink request completed, files linked")
 
-            selected_source_dir = request.args.get("selected_source_dir")
-            app.logger.info(f"Selected source dir: {selected_source_dir}")
-            selected_target_dir = request.args.get("selected_target_dir")
-            app.logger.info(f"Selected target dir: {selected_target_dir}")
-            items = []
-
-            if selected_source_dir:
-                app.logger.info("Getting items for rendering")
-                items = handle_get_request_for_file_selector(
-                    selected_source_dir, selected_target_dir
-                )
-                app.logger.info("Successfully retrieved items for rendering")
-
-            return render_template(
-                "file_selector.html",
-                items=items,
-                source_dirs=Config.source_dirs,
-                target_dirs=Config.target_dirs,
-                selected_source_dir=selected_source_dir,
-                selected_target_dir=selected_target_dir,
-            )
-
-    @app.route("/remove_link", methods=["POST"])
-    def remove_link():
-        app.logger.info("Handling POST request for remove link")
-        selected_source_dir = request.form.get("selected_source_dir")
-        app.logger.info(f"Selected source dir: {selected_source_dir}")
-        selected_target_dir = request.form.get("selected_target_dir")
-        app.logger.info(f"Selected target dir: {selected_target_dir}")
-        selected_items = request.form.getlist("selected_items")
-        app.logger.info(f"Selected items: {selected_items}")
-
-        handle_link_removal_request(selected_target_dir, selected_items)
-        app.logger.info("Handling POST request for remove link completed")
         return redirect(
             url_for(
                 "base",
-                selected_source_dir=selected_source_dir,
-                selected_target_dir=selected_target_dir,
+                selected_source_dir=user_selection.selected_source_dir,
+                selected_target_dir=user_selection.selected_target_dir,
+            )
+        )
+
+    @app.route("/symlink", methods=["POST"])
+    def symlink():
+        app.logger.info("Handling symlink request for file selector")
+
+        user_selection = handle_symlink_request(request)
+
+        app.logger.info("Handling symlink request completed, files linked")
+
+        return redirect(
+            url_for(
+                "base",
+                selected_source_dir=user_selection.selected_source_dir,
+                selected_target_dir=user_selection.selected_target_dir,
+            )
+        )
+
+    @app.route("/remove_link", methods=["POST"])
+    def remove_link():
+
+        app.logger.info("Handling POST request for remove link")
+
+        user_selection = handle_link_removal_request(request)
+
+        app.logger.info("Handling POST request for remove link completed")
+
+        return redirect(
+            url_for(
+                "base",
+                selected_source_dir=user_selection.selected_source_dir,
+                selected_target_dir=user_selection.selected_target_dir,
             )
         )
 
