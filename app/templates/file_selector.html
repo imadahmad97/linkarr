@@ -17,31 +17,31 @@ href="{{ url_for('static', filename='file_selector.css') }}"
 {% block content %}
     <h2>Select Items for Linking</h2>
     <div class="top_forms_container">
-    <div class="source_and_target_dir_form">
+      <div class="source_and_target_dir_form">
         <form action="" method="get">
-        <label for="source_dir"><h3>Source Directory:</h3></label>
-        <select name="selected_source_dir" id="source_dir" onchange="checkAndSubmit()">
-            <option value="">-- Select Source Directory --</option>
-            {% for dir in source_dirs %}
-                <option value="{{ dir }}" {% if dir == selected_source_dir %}selected{% endif %}>
-                    {{ dir }}
-                </option>
-            {% endfor %}
-        </select>
-        <br><br>
-        <label for="target_dir"><h3>Target Directory:</h3></label>
-        <select name="selected_target_dir" id="target_dir" onchange="checkAndSubmit()">
-            <option value="">-- Select Target Directory --</option>
-            {% for dir in target_dirs %}
-                <option value="{{ dir }}" {% if dir == selected_target_dir %}selected{% endif %}>
-                    {{ dir }}
-                </option>
-            {% endfor %}
-        </select>
-        <br><br>
+            <label for="source_dir"><h3>Source Directory:</h3></label>
+            <select name="selected_source_dir" id="source_dir" onchange="checkAndSubmit()">
+                <option value="">-- Select Source Directory --</option>
+                {% for dir in source_dirs %}
+                    <option value="{{ dir }}" {% if dir == selected_source_dir %}selected{% endif %}>
+                        {{ dir }}
+                    </option>
+                {% endfor %}
+            </select>
+            <br><br>
+            <label for="target_dir"><h3>Target Directory:</h3></label>
+            <select name="selected_target_dir" id="target_dir" onchange="checkAndSubmit()">
+                <option value="">-- Select Target Directory --</option>
+                {% for dir in target_dirs %}
+                    <option value="{{ dir }}" {% if dir == selected_target_dir %}selected{% endif %}>
+                        {{ dir }}
+                    </option>
+                {% endfor %}
+            </select>
+            <br><br>
+        </form> <!-- 🟢 close the form here properly -->
     </div>
-
-</form>
+    
 
         <div class="item_selector_form">
             <div class="wrap">
@@ -133,9 +133,9 @@ href="{{ url_for('static', filename='file_selector.css') }}"
                 <div class="button_group">
                     <input type="hidden" name="link_type" id="link_type">
                     <div id="selected-items-hidden-container"></div>
-                    <button id="hardlink_button" type="submit" onclick="prepareForm('hard', event)" disabled>Hard Link</button>
+                    <button id="hardlink_button" type="submit" onclick="bulkLinkButton('hard')" disabled>Hard Link</button>
                     <br><br>
-                    <button id="symboliclink_button" type="submit" onclick="prepareForm('symbolic', event)" disabled>Symbolic Link</button>
+                    <button id="symboliclink_button" type="submit" onclick="bulkLinkButton('symbolic')" disabled>Symbolic Link</button>
                                      
                 </div>
 </div>
@@ -175,29 +175,24 @@ href="{{ url_for('static', filename='file_selector.css') }}"
         document.getElementById('source_dir').addEventListener('change', toggleButtons);
         document.getElementById('target_dir').addEventListener('change', toggleButtons);
 
-        function prepareForm(linkType, event) {
-            event.preventDefault(); // Stop immediate form submission
-
-            const checkboxes = document.querySelectorAll('.item-checkbox:checked');
-            const container = document.getElementById('selected-items-hidden-container');
-            const form = document.getElementById('bottom-button-form');
-
-            // Clear previous hidden inputs
-            container.innerHTML = '';
-
-            // Set the link type
-            document.getElementById("link_type").value = linkType;
-
-            // Append each selected item
-            checkboxes.forEach((cb) => {
+        function bulkLinkButton(linkType) {
+          const form = document.getElementById('bottom-button-form');
+          const checkboxes = document.querySelectorAll('.item-checkbox:checked');
+          const container = document.getElementById('selected-items-hidden-container');
+          container.innerHTML = ''; // Clear previous hidden inputs
+          checkboxes.forEach((cb) => {
             const input = document.createElement('input');
             input.type = 'hidden';
             input.name = 'selected_items';
             input.value = cb.value;
             container.appendChild(input);
-            });
-
-            form.submit(); // Manually submit form after appending
+          });
+          
+          if (linkType === 'hard') {
+            form.action = "{{ url_for('hardlink') }}";
+          } else if (linkType === 'symbolic') {
+            form.action = "{{ url_for('symlink') }}";
+          }
         }
 
         // In case both are pre-filled from a GET request

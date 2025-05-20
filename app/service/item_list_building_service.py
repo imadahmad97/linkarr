@@ -46,5 +46,4 @@ def build_items_and_links_dict(items, target_dir):
             items_and_links.append(item_dict)
 
     app.logger.info("Finished building items and links dictionary")
-    app.logger.info(items_and_links)
     return items_and_links
