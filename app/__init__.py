@@ -1,6 +1,7 @@
 from flask import Flask
 import logging
 from .model.config import Config
+from .model.user_selection_validator import UserSelectionValidator
 
 
 def create_app():

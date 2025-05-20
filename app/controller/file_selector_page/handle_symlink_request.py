@@ -1,5 +1,6 @@
 from flask import current_app as app
-from app.model.userselection import UserSelection
+from app.model.user_selection import UserSelection
+from app.model.user_selection_validator import UserSelectionValidator
 from app.service.symboliclink_service import symbolically_link_files_and_directories
 
 
@@ -17,24 +18,28 @@ def handle_symlink_request(request):
     # Step 2: Build user selection from request
     app.logger.info("Building user selection from POST request")
     user_selection = UserSelection(
-        selected_source_dir, selected_target_dir, "hard", selected_items
+        selected_source_dir, selected_target_dir, selected_items
     )
     app.logger.info("Successfully built user selection")
 
     # Step 3: Validate user selection
     app.logger.info("Validating user selection")
-    user_selection.validate_user_directory_selection()
-    user_selection.validate_user_item_selection()
-    app.logger.info("User selection validated successfully")
+    validator = UserSelectionValidator(user_selection)
+    app.logger.info("Validating directories")
+    validator.validate_directories()
+    app.logger.info("Validating items")
+    validator.validate_items()
+
+    app.logger.info("Validation completed successfully")
 
     # Step 4: Perform hardlinking
-    app.logger.info("Performing hardlinking")
+    app.logger.info("Performing symbolic linking")
     symbolically_link_files_and_directories(
         user_selection.selected_source_dir,
         user_selection.selected_target_dir,
         user_selection.selected_items,
     )
-    app.logger.info("Hardlinking completed successfully")
+    app.logger.info("Symbolic linking completed successfully")
 
     # Step 5: Return user selection
     return user_selection
