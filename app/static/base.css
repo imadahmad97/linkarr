@@ -74,3 +74,35 @@
   margin-left: auto;
   margin-right: 20px; /* if you still want a little padding */
 }
+
+.flashes {
+  list-style-type: none;
+  padding: 0;
+  margin-top: 20px;
+}
+
+.flashes li {
+  padding: 10px;
+  margin-bottom: 5px;
+  border-radius: 5px;
+  color: black;
+}
+
+/* Success flash */
+.success {
+  background-color: #4caf50; /* green */
+}
+
+/* Error flash */
+.error {
+  background-color: #f44336; /* red */
+}
+
+.success {
+  background-color: #e0ffe0;
+  border: 1px solid #a0d0a0;
+}
+.error {
+  background-color: #ffe0e0;
+  border: 1px solid #d0a0a0;
+}

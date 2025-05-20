@@ -1,6 +1,6 @@
 import logging
 
-from flask import redirect, render_template, request, url_for
+from flask import flash, redirect, render_template, request, url_for
 
 from app.controller.config_page.handle_post_request import (
     handle_post_request_for_config_page,
@@ -48,6 +48,11 @@ def init_routes(app):
 
         user_selection = handle_hardlink_request(request)
 
+        for item in user_selection.selected_items:  # type: ignore
+            flash(
+                f"Hardlink created for {item} in {user_selection.selected_target_dir}",
+                "success",
+            )
         app.logger.info("Handling hardlink request completed, files linked")
 
         return redirect(
@@ -64,6 +69,11 @@ def init_routes(app):
 
         user_selection = handle_symlink_request(request)
 
+        for item in user_selection.selected_items:  # type: ignore
+            flash(
+                f"Symlink created for {item} in {user_selection.selected_target_dir}",
+                "success",
+            )
         app.logger.info("Handling symlink request completed, files linked")
 
         return redirect(
@@ -80,6 +90,12 @@ def init_routes(app):
         app.logger.info("Handling POST request for remove link")
 
         user_selection = handle_link_removal_request(request)
+
+        for item in user_selection.selected_items:  # type: ignore
+            flash(
+                f"Link removed for {item} in {user_selection.selected_target_dir}",
+                "success",
+            )
 
         app.logger.info("Handling POST request for remove link completed")
 

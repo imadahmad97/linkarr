@@ -172,18 +172,6 @@ button:disabled {
   width: 100%;
 }
 
-/* Flash message styles */
-.flashes {
-  max-width: 1500px;
-  margin: 20px auto;
-  padding: 10px;
-  border-radius: 5px;
-  background-color: lightgreen;
-  color: black;
-  border: 1px solid green;
-  text-align: center;
-}
-
 @import url(https://fonts.googleapis.com/css?family=Open+Sans);
 
 .search {
