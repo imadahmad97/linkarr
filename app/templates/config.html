@@ -3,7 +3,7 @@
 <link
   rel="stylesheet"
   type="text/css"
-  href="{{ url_for('static', filename='config.css') }}"
+  href="{{ url_for('static', filename='css/config.css') }}"
 />
 {% endblock %} {% block content %}
 <body>
@@ -93,20 +93,6 @@
   </ul>
   {% endif %} {% endwith %}
 
-  <script>
-    function addField(containerId, templateId) {
-      var container = document.getElementById(containerId);
-      var template = document.getElementById(templateId);
-      var newField = template.cloneNode(true);
-      newField.style.display = "flex";
-      newField.removeAttribute("id");
-      container.insertBefore(newField, container.querySelector(".add-button"));
-    }
-
-    function removeField(button) {
-      var field = button.parentElement;
-      field.parentElement.removeChild(field);
-    }
-  </script>
+  <scrip src="{{ url_for('static', filename='js/config.js') }}"></script>
 </body>
 {% endblock %}

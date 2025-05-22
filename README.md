@@ -1,6 +1,6 @@
 <h1 align="center">
   <br>
-  <img src="app/static/linkarr_logo_no_background.png" alt="Markdownify" width="200">
+  <img src="app/static/images/linkarr_logo_no_background.png" alt="Markdownify" width="200">
   <br>
   Linkarr
   <br>
@@ -28,7 +28,7 @@
   <a href="#installation">Installation</a>
 </p>
 
-![](app/static/linkarr_demo_gif.gif)
+![](app/static/images/linkarr_demo_gif.gif)
 
 ## About
 

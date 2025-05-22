@@ -1,5 +1,4 @@
 from flask import current_app as app
-import os
 from app.model.user_selection import UserSelection
 from app.model.user_selection_validator import UserSelectionValidator
 from app.service.link_removal_service import remove_links
