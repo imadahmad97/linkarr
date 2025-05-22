@@ -12,10 +12,12 @@ function toggleButtons() {
   const target = document.getElementById("target_dir").value;
   const hardBtn = document.getElementById("hardlink_button");
   const symbolicBtn = document.getElementById("symboliclink_button");
+  const unlinkBtn = document.getElementById("unlink_button");
 
   const enable = source && target;
   hardBtn.disabled = !enable;
   symbolicBtn.disabled = !enable;
+  unlinkBtn.disabled = !enable;
 }
 
 document.getElementById("source_dir").addEventListener("change", toggleButtons);
@@ -38,6 +40,8 @@ function bulkLinkButton(linkType) {
     form.action = URLS.hardlink;
   } else if (linkType === "symbolic") {
     form.action = URLS.symlink;
+  } else if (linkType === "unlink") {
+    form.action = URLS.unlink;
   }
 }
 

@@ -81,12 +81,6 @@ def init_routes(app):
 
         user_selection = handle_link_removal_request(request)
 
-        for item in user_selection.selected_items:  # type: ignore
-            flash(
-                f"Link removed for {item} in {user_selection.selected_target_dir}",
-                "success",
-            )
-
         app.logger.info("Handling POST request for remove link completed")
 
         return redirect(

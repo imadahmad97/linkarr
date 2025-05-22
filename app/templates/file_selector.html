@@ -74,7 +74,7 @@ href="{{ url_for('static', filename='css/file_selector.css') }}"
                             <input type="hidden" name="selected_source_dir" value="{{ selected_source_dir }}">
                             <input type="hidden" name="selected_target_dir" value="{{ selected_target_dir }}">
                             <input type="hidden" name="unlink" value="true">
-                            <button type="submit" class="unlink-button">Unlink</button>
+                            <button type="submit" class="quick_unlink-button">Unlink</button>
                           </form>
                         </div>
                       {% else %}
@@ -136,6 +136,8 @@ href="{{ url_for('static', filename='css/file_selector.css') }}"
                     <button id="hardlink_button" type="submit" onclick="bulkLinkButton('hard')" disabled>Hard Link</button>
                     <br><br>
                     <button id="symboliclink_button" type="submit" onclick="bulkLinkButton('symbolic')" disabled>Symbolic Link</button>
+                    <br><br>
+                    <button id="unlink_button" type="submit" onclick="bulkLinkButton('unlink')" disabled>Unlink</button>
                                      
                 </div>
 </div>
@@ -154,7 +156,8 @@ href="{{ url_for('static', filename='css/file_selector.css') }}"
     <script>
       const URLS = {
         hardlink: "{{ url_for('hardlink') }}",
-        symlink: "{{ url_for('symlink') }}"
+        symlink: "{{ url_for('symlink') }}",
+        unlink: "{{ url_for('remove_link') }}",
       };
       </script>
     <script src ="{{ url_for('static', filename='js/file_selector.js') }}"></script>

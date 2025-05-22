@@ -109,7 +109,8 @@ label {
 }
 
 #hardlink_button,
-#symboliclink_button {
+#symboliclink_button,
+#unlink_button {
   width: 100%; /* Adjust width so there's space around them */
   padding: 10px 20px;
   border: none;
@@ -145,6 +146,13 @@ label {
   background-color: #4b0082;
 }
 
+#unlink_button {
+  background-color: #f44336;
+}
+
+#unlink_button:hover {
+  background-color: #d32f2f;
+}
 /* Button hover effect */
 #hardlink_button:hover {
   background-color: #08ee99;
@@ -160,7 +168,7 @@ button:disabled {
   opacity: 0.6;
 }
 
-.unlink-button {
+.quick_unlink-button {
   border: none;
   border-radius: 5px;
   color: #fff;
