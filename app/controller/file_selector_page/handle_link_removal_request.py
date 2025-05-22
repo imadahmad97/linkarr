@@ -2,6 +2,7 @@ from flask import current_app as app
 import os
 from app.model.user_selection import UserSelection
 from app.model.user_selection_validator import UserSelectionValidator
+from app.service.link_removal_service import remove_links
 
 
 def handle_link_removal_request(request) -> UserSelection:
@@ -31,15 +32,10 @@ def handle_link_removal_request(request) -> UserSelection:
     validator.validate_items()
 
     app.logger.info("Validation completed successfully")
+
     # Step 2: Remove links
     app.logger.info("Removing links")
-    for item in user_selection.selected_items:  # type: ignore
-        app.logger.info(f"Processing item: {item}")
-        item = os.path.basename(item)
-        target = os.path.join(selected_target_dir, item)
-
-        os.remove(target)
-        app.logger.info(f"Removed link: {target}")
+    remove_links(user_selection.selected_target_dir, user_selection.selected_items)  # type: ignore
 
     app.logger.info("Link removal request handled successfully")
 
