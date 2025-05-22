@@ -1,12 +1,22 @@
 import os
 from flask import current_app as app
+from flask import flash
 
 
 def create_file_hardlink(source_file, target_dir):
     target_file = os.path.join(target_dir, os.path.basename(source_file))
     app.logger.debug(f"Creating hardlink for file: {source_file} -> {target_file}")
-    if not os.path.exists(target_file):
+
+    if os.path.islink(target_file):
+        flash(f"Item {target_file} already symlinked!", "warning")
+        app.logger.info(f"Item {target_file} already symlinked!")
+    elif os.path.exists(target_file):
+        flash(f"Item {target_file} already hardlinked!", "warning")
+        app.logger.info(f"Item {target_file} already hardlinked!")
+    else:
         os.link(source_file, target_file)
+        flash(f"Item {target_file} symlinked!", "success")
+        app.logger.info(f"Symbolic link created: {source_file} -> {target_file}")
 
 
 def create_directory_hardlink(source_dir, target_dir):
@@ -19,8 +29,19 @@ def create_directory_hardlink(source_dir, target_dir):
         for file in files:
             source_file = os.path.join(root, file)
             target_file = os.path.join(target_root, file)
-            if not os.path.exists(target_file):
+            if os.path.islink(target_file):
+                flash(f"File {target_file} already symlinked!", "warning")
+                app.logger.debug(f"File {target_file} already symlinked!")
+            elif os.path.exists(target_file):
+                flash(f"File {target_file} already hardlinked!", "warning")
+                app.logger.debug(f"File {target_file} already hardlinked!")
+            else:
+                app.logger.debug(
+                    f"Creating hardlink for file: {source_file} -> {target_file}"
+                )
                 os.link(source_file, target_file)
+                flash(f"File {target_file} hardlinked!", "success")
+                app.logger.debug(f"Hardlink created: {source_file} -> {target_file}")
 
 
 def hardlink_files_and_directories(source_dir, target_dir, items):

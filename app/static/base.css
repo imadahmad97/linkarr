@@ -106,3 +106,9 @@
   background-color: #ffe0e0;
   border: 1px solid #d0a0a0;
 }
+
+.warning {
+  background-color: #fff3cd;
+  border: 1px solid #ffeeba;
+  color: #856404;
+}
