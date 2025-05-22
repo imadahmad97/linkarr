@@ -151,5 +151,11 @@ href="{{ url_for('static', filename='css/file_selector.css') }}"
             </ul>
         {% endif %}
     {% endwith %}
+    <script>
+      const URLS = {
+        hardlink: "{{ url_for('hardlink') }}",
+        symlink: "{{ url_for('symlink') }}"
+      };
+      </script>
     <script src ="{{ url_for('static', filename='js/file_selector.js') }}"></script>
 {% endblock %}

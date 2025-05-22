@@ -35,9 +35,9 @@ function bulkLinkButton(linkType) {
   });
 
   if (linkType === "hard") {
-    form.action = "{{ url_for('hardlink') }}";
+    form.action = URLS.hardlink;
   } else if (linkType === "symbolic") {
-    form.action = "{{ url_for('symlink') }}";
+    form.action = URLS.symlink;
   }
 }
 
