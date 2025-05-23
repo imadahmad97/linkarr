@@ -9,11 +9,11 @@
 <h4 align="center">A simple graphical tool for linking files, built with Python and Flask.</h4>
 
 <p align="center">
-  <a href="https://hub.docker.com/repository/docker/imadahmad97/linkarr/general">
+  <a href="https://www.python.org">
     <img src="https://img.shields.io/badge/Python-3.9-3776AB.svg?style=flat&logo=python&logoColor=white)"
          alt="Gitter">
   </a>
-<a href="docker.com">
+<a href="https://hub.docker.com/repository/docker/imadahmad97/linkarr/general">
 <img src="https://img.shields.io/badge/docker-%230db7ed.svg?logo=docker&logoColor=white"></a>
 <img src="https://img.shields.io/github/contributors/imadahmad97/linkarr"></a>
 <img src="https://firstcontributions.github.io/open-source-badges/badges/open-source-v1/open-source-200x33.png" height="20.5">
