@@ -9,7 +9,7 @@
 <h4 align="center">A simple graphical tool for linking files, built with Python and Flask.</h4>
 
 <p align="center">
-  <a href="https://www.python.org">
+  <a href="https://hub.docker.com/repository/docker/imadahmad97/linkarr/general">
     <img src="https://img.shields.io/badge/Python-3.9-3776AB.svg?style=flat&logo=python&logoColor=white)"
          alt="Gitter">
   </a>
